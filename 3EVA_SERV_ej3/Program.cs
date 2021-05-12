@@ -9,47 +9,57 @@ namespace _3EVA_SERV_ej3
 
         static void Main(string[] args)
         {
-            Thread tSumar = new Thread(sumar);
-            Thread tRestar = new Thread(restar);
+            Thread tSumar = new Thread(() =>
+            {
+                do
+                {
+                    if (valor != 1000)
+                    {
+                        valor++;
+                        Console.WriteLine(valor + " Sumado por Suma");
+                    }
+                } while (valor != 1000);
+            });
+            Thread tRestar = new Thread(() =>
+            {
+                do
+                {
+                    if (valor != -1000)
+                    {
+                        valor--;
+                        Console.WriteLine(valor + " Restado por Resta");
+                    }
+                } while (valor != -1000);
+            });
             tSumar.Priority = ThreadPriority.Highest;
             tRestar.Priority = ThreadPriority.Lowest;
             tSumar.Start();
             tRestar.Start();
             Console.ReadKey();
-
-            //for (int i = 0; i <= 1000; i++) valor++;
         }
 
-        static void sumar()
-        {
-            for (int i = 0; i <= 1000; i++)
-            {
-                if (valor == 1000)
-                {
-                    Console.WriteLine(valor);
-                }
-                else
-                {
-                    valor++;
-                    Console.WriteLine(valor + " Sumado por Suma");
-                }
-            }
-        }
+        //static void Sumar()
+        //{
+        //    do
+        //    {
+        //        if (valor != 1000)
+        //        {
+        //            valor++;
+        //            Console.WriteLine(valor + " Sumado por Suma");
+        //        }
+        //    } while (valor != 1000);
+        //}
 
-        static void restar()
-        {
-            for (int i = 0; i <= 1000; i++)
-            {
-                if (valor == 1000)
-                {
-                    Console.WriteLine(valor);
-                }
-                else
-                {
-                    valor--;
-                    Console.WriteLine(valor + " Restado por Resta");
-                }
-            }
-        }
+        //static void Restar()
+        //{
+        //    do
+        //    {
+        //        if (valor != -1000)
+        //        {
+        //            valor--;
+        //            Console.WriteLine(valor + " Restado por Resta");
+        //        }
+        //    } while (valor != -1000);
+        //}
     }
 }
