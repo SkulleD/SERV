@@ -5,6 +5,7 @@ namespace _3EVA_SERV_ej3
 {
     class Program
     {
+        static readonly object l = new object();
         static int valor = 0;
 
         static void Main(string[] args)
@@ -13,10 +14,15 @@ namespace _3EVA_SERV_ej3
             {
                 do
                 {
-                    if (valor != 1000)
+                    lock (l)
                     {
-                        valor++;
-                        Console.WriteLine(valor + " Sumado por Suma");
+                        if (valor != 1000)
+                        {
+                            //Thread.Sleep(1);
+                            valor++;
+                            Console.SetCursorPosition(2, 2);
+                            Console.Write(valor + " Sumado por Suma");
+                        }
                     }
                 } while (valor != 1000);
             });
@@ -24,10 +30,15 @@ namespace _3EVA_SERV_ej3
             {
                 do
                 {
-                    if (valor != -1000)
+                    lock (l)
                     {
-                        valor--;
-                        Console.WriteLine(valor + " Restado por Resta");
+                        if (valor != -1000)
+                        {
+                            //Thread.Sleep(1);
+                            valor--;
+                            Console.SetCursorPosition(2, 2);
+                            Console.Write(valor + " Restado por Resta");
+                        }
                     }
                 } while (valor != -1000);
             });
@@ -37,29 +48,5 @@ namespace _3EVA_SERV_ej3
             tRestar.Start();
             Console.ReadKey();
         }
-
-        //static void Sumar()
-        //{
-        //    do
-        //    {
-        //        if (valor != 1000)
-        //        {
-        //            valor++;
-        //            Console.WriteLine(valor + " Sumado por Suma");
-        //        }
-        //    } while (valor != 1000);
-        //}
-
-        //static void Restar()
-        //{
-        //    do
-        //    {
-        //        if (valor != -1000)
-        //        {
-        //            valor--;
-        //            Console.WriteLine(valor + " Restado por Resta");
-        //        }
-        //    } while (valor != -1000);
-        //}
     }
 }
