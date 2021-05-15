@@ -7,12 +7,13 @@ namespace _3EVA_SERV_ej3
     {
         static readonly object l = new object();
         static int valor = 0;
+        static bool run = true;
 
         static void Main(string[] args)
         {
             Thread tSumar = new Thread(() =>
             {
-                do
+                while (run)
                 {
                     lock (l)
                     {
@@ -24,11 +25,11 @@ namespace _3EVA_SERV_ej3
                             Console.Write(valor + " Sumado por Suma");
                         }
                     }
-                } while (valor != 1000);
+                }
             });
             Thread tRestar = new Thread(() =>
             {
-                do
+                while (run)
                 {
                     lock (l)
                     {
@@ -40,12 +41,24 @@ namespace _3EVA_SERV_ej3
                             Console.Write(valor + " Restado por Resta");
                         }
                     }
-                } while (valor != -1000);
+                }
             });
             tSumar.Priority = ThreadPriority.Highest;
             tRestar.Priority = ThreadPriority.Lowest;
             tSumar.Start();
             tRestar.Start();
+
+            while (run)
+            {
+                if (valor == 900)
+                {
+                    run = false;
+                }
+                if (valor == -1000)
+                {
+                    run = false;
+                }
+            }
             Console.ReadKey();
         }
     }
