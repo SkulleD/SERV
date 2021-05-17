@@ -11,53 +11,53 @@ namespace _3EVA_SERV_ej3
 
         static void Main(string[] args)
         {
-            Thread tSumar = new Thread(() =>
-            {
-                while (run)
-                {
-                    lock (l)
-                    {
-                        if (valor != 1000)
-                        {
-                            //Thread.Sleep(1);
-                            valor++;
-                            Console.SetCursorPosition(2, 2);
-                            Console.Write(valor + " Sumado por Suma");
-                        }
-                    }
-                }
-            });
-            Thread tRestar = new Thread(() =>
-            {
-                while (run)
-                {
-                    lock (l)
-                    {
-                        if (valor != -1000)
-                        {
-                            //Thread.Sleep(1);
-                            valor--;
-                            Console.SetCursorPosition(2, 2);
-                            Console.Write(valor + " Restado por Resta");
-                        }
-                    }
-                }
-            });
-            tSumar.Priority = ThreadPriority.Highest;
-            tRestar.Priority = ThreadPriority.Lowest;
-            tSumar.Start();
-            tRestar.Start();
-
             while (run)
             {
-                if (valor == 900)
+                Thread tSumar = new Thread(() =>
                 {
-                    run = false;
-                }
-                if (valor == -1000)
+                    while (run)
+                    {
+                        lock (l)
+                        {
+                            if (valor != 1000)
+                            {
+                            //Thread.Sleep(1);
+                            valor++;
+                                Console.SetCursorPosition(2, 2);
+                                Console.Write(valor + " Sumado por Suma");
+                            }
+                            else
+                            {
+                                run = false;
+                            }
+                        }
+                    }
+                });
+                Thread tRestar = new Thread(() =>
                 {
-                    run = false;
-                }
+                    while (run)
+                    {
+                        lock (l)
+                        {
+                            if (valor != -1000)
+                            {
+                            //Thread.Sleep(1);
+                            valor--;
+                                Console.SetCursorPosition(2, 2);
+                                Console.Write(valor + " Restado por Resta");
+                            }
+                            else
+                            {
+                                run = false;
+                            }
+                        }
+                    }
+                });
+
+                tSumar.Priority = ThreadPriority.Highest;
+                tRestar.Priority = ThreadPriority.Lowest;
+                tSumar.Start();
+                tRestar.Start();
             }
             Console.ReadKey();
         }
