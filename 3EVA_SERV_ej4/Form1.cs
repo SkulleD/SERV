@@ -73,7 +73,14 @@ namespace _3EVA_SERV_ej4
             }
 
             textBox1.ResetText();
-            textBox1.Text = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}", proceso.Id, proceso.StartTime, proceso.MainModule, proceso.ProcessName);
+            try
+            {
+
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                textBox1.Text = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}", proceso.Id, proceso.StartTime, proceso.MainModule, proceso.ProcessName);
+            }
         }
 
         private void CloseProcess()
