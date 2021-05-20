@@ -52,34 +52,42 @@ namespace _3EVA_SERV_ej4
 
         private void GetProcesses()
         {
+            label1.Text = "";
             processes = Process.GetProcesses();
 
+            textBox1.ResetText();
             foreach (Process p in processes)
             {
-                textBox1.AppendText(p.Id + "\t" + Acortar(p.ProcessName, 15) + "\t" + p.MainWindowTitle + "\r\n");
+                textBox1.AppendText(string.Format("{0, 6}{1, 6}{2, 6}", p.Id, Acortar(p.ProcessName, 15), p.MainWindowTitle)); //string.Format
             }
         }
 
-        private void GetProcessInfo()
+        private void GetProcessInfo() // Poner los DLLs
         {
             try
             {
+                textBox1.ResetText();
+                label1.Text = "";
                 int pid = Convert.ToInt32(textBox2.Text);
                 proceso = Process.GetProcessById(pid);
+                textBox1.ResetText();
+                textBox1.Text = string.Format("{0}\r\n{1}\r\n{2}\r\n{3}", proceso.Id, proceso.StartTime, proceso.MainModule, proceso.ProcessName);
             }
             catch (FormatException)
             {
-
+                label1.Text = "(!) Introduce un PID válido.";
             }
-
-            textBox1.ResetText();
-            try
+            catch (ArgumentException)
             {
-
+                label1.Text = "(!) No se está ejecutando ningún\nproceso con ese PID.";
             }
-            catch (System.ComponentModel.Win32Exception)
+            catch (OverflowException)
             {
-                textBox1.Text = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}", proceso.Id, proceso.StartTime, proceso.MainModule, proceso.ProcessName);
+                label1.Text = "(!) No existe ese proceso.";
+            }
+            catch (Win32Exception)
+            {
+                label1.Text = "(!) No tienes permisos.";
             }
         }
 
@@ -87,45 +95,101 @@ namespace _3EVA_SERV_ej4
         {
             try
             {
-                int pid = Convert.ToInt32(textBox2.Text);
-                proceso = Process.GetProcessById(pid);
+                textBox1.ResetText();
+                if (!string.IsNullOrWhiteSpace(textBox2.Text))
+                {
+                    label1.Text = "";
+                    int pid = Convert.ToInt32(textBox2.Text);
+                    proceso = Process.GetProcessById(pid);
+                    proceso.CloseMainWindow();
+                }
             }
             catch (FormatException)
             {
+                label1.Text = "(!) Introduce un PID válido.";
+            }
+            catch (ArgumentException)
+            {
+                label1.Text = "(!) No se está ejecutando ningún\nproceso con ese PID.";
+            }
+            catch (OverflowException)
+            {
+                label1.Text = "(!) No existe ese proceso.";
+            }
+            catch (InvalidOperationException)
+            {
 
             }
+            catch (Win32Exception)
+            {
+                label1.Text = "(!) No tienes permisos.";
+            }
 
-            proceso.Close();
         }
 
         private void KillProcess()
         {
             try
             {
+                textBox1.ResetText();
+                label1.Text = "";
                 int pid = Convert.ToInt32(textBox2.Text);
                 proceso = Process.GetProcessById(pid);
+                proceso.Kill();
             }
             catch (FormatException)
             {
+                label1.Text = "(!) Introduce un PID válido.";
+            }
+            catch (ArgumentException)
+            {
+                label1.Text = "(!) No se está ejecutando ningún\nproceso con ese PID.";
+            }
+            catch (OverflowException)
+            {
+                label1.Text = "(!) No existe ese proceso.";
+            }
+            catch (InvalidOperationException)
+            {
 
             }
-
-            proceso.Kill();
+            catch (Win32Exception)
+            {
+                label1.Text = "(!) No tienes permisos.";
+            }
         }
 
         private void RunApp()
         {
-            string appName = textBox2.Text;
-            proceso = Process.Start(appName);
+            try
+            {
+                textBox1.ResetText();
+                label1.Text = "";
+                string appName = textBox2.Text;
+                proceso = Process.Start(appName);
+            }
+            catch (Win32Exception)
+            {
+                label1.Text = "(!) No se encuentra la aplicación.";
+            }
+            catch (InvalidOperationException)
+            {
+
+            }
         }
 
         private string Acortar(string cadena, int longitud)
         {
             if (!string.IsNullOrEmpty(cadena) && cadena.Length > longitud)
             {
-                return cadena.Substring(0, longitud) + "...";
+                return cadena.Substring(0, longitud - 3) + "...";
             }
             return cadena;
+        }
+
+        private void SaveLog()
+        {
+            //PID y texto 
         }
     }
 }
