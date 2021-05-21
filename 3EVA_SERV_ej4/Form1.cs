@@ -60,11 +60,11 @@ namespace _3EVA_SERV_ej4
             textBox1.ResetText();
             foreach (Process p in processes)
             {
-                textBox1.AppendText(string.Format("{0}\t{1}\t{2}\r\n", p.Id, Acortar(p.ProcessName, 15), p.MainWindowTitle)); //string.Format
+                textBox1.AppendText(string.Format("{0}\t{1}\t{2}\r\n", p.Id, Acortar(p.ProcessName, 15), p.MainWindowTitle));
             }
         }
 
-        private void GetProcessInfo() // Poner los DLLs
+        private void GetProcessInfo() // Poner los DLLs y subprocesos
         {
             int pid = 0;
             try
@@ -98,17 +98,25 @@ namespace _3EVA_SERV_ej4
                 label1.Text = "(!) No tienes permisos.";
             }
 
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string txtFile = ruta + "\\TaskManager.txt";
             if (success)
             {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: GetProcessInfo", "Success" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
+                using (StreamWriter writer = new StreamWriter(txtFile, true))
+                {
+                    try
+                    {
+                        writer.Write(proceso.StartTime.ToString() + " PID: " + pid.ToString() + " Action: GetProcessInfo\n");
+                        writer.Flush();
+                        writer.Close();
+                    }
+                    catch (Win32Exception)
+                    {
+                        success = false;
+                        label1.Text = "(!) No tienes permisos.";
+                    }
+                }
             }
-            else
-            {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: GetProcessInfo", "Failure" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
-            }
-
         }
 
         private void CloseProcess()
@@ -151,15 +159,25 @@ namespace _3EVA_SERV_ej4
                 label1.Text = "(!) No tienes permisos.";
             }
 
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string txtFile = ruta + "\\TaskManager.txt";
             if (success)
             {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: CloseProcess", "Success" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
-            }
-            else
-            {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: CloseProcess", "Failure" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
+                using (StreamWriter writer = new StreamWriter(txtFile, true))
+                {
+                    try
+                    {
+                        writer.Write(proceso.StartTime.ToString() + " PID: " + pid.ToString() + " Action: CloseProcess\n");
+                        writer.Flush();
+                        writer.Close();
+                    }
+                    catch (Win32Exception)
+                    {
+                        success = false;
+                        label1.Text = "(!) No tienes permisos.";
+                    }
+
+                }
             }
         }
 
@@ -200,15 +218,24 @@ namespace _3EVA_SERV_ej4
                 label1.Text = "(!) No tienes permisos.";
             }
 
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string txtFile = ruta + "\\TaskManager.txt";
             if (success)
             {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: KillProcess", "Success" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
-            }
-            else
-            {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: KillProcess", "Failure" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
+                using (StreamWriter writer = new StreamWriter(txtFile, true))
+                {
+                    try
+                    {
+                        writer.Write(proceso.StartTime.ToString() + " PID: " + pid.ToString() + " Action: KillProcess\n");
+                        writer.Flush();
+                        writer.Close();
+                    }
+                    catch (Win32Exception)
+                    {
+                        success = false;
+                        label1.Text = "(!) No tienes permisos.";
+                    }
+                }
             }
         }
 
@@ -239,16 +266,30 @@ namespace _3EVA_SERV_ej4
                 success = false;
                 label1.Text = "(!) No se está ejecutando ningún\nproceso con ese PID.";
             }
+            catch (FormatException)
+            {
+                success = false;
+                label1.Text = "(!) Introduce un PID válido.";
+            }
 
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string txtFile = ruta + "\\TaskManager.txt";
             if (success)
             {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: RunApp", "Success" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
-            }
-            else
-            {
-                string[] log = { proceso.StartTime.ToString(), pid.ToString(), "Action: RunApp", "Failure" };
-                File.WriteAllLines("C:\\Users\\Álvaro Vila\\AppData\\TaskManagerLog.txt", log);
+                using (StreamWriter writer = new StreamWriter(txtFile, true))
+                {
+                    try
+                    {
+                        writer.Write(proceso.StartTime.ToString() + " PID: " + pid.ToString() + " Action: RunApp\n");
+                        writer.Flush();
+                        writer.Close();
+                    }
+                    catch (Win32Exception)
+                    {
+                        success = false;
+                        label1.Text = "(!) No tienes permisos.";
+                    }
+                }
             }
         }
 
