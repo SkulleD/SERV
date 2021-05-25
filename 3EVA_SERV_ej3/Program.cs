@@ -11,54 +11,48 @@ namespace _3EVA_SERV_ej3
 
         static void Main(string[] args)
         {
-            while (run)
+            Thread tSumar = new Thread(() =>
             {
-                Thread tSumar = new Thread(() =>
+                while (run)
                 {
-                    while (run)
+                    lock (l)
                     {
-                        lock (l)
+                        if (run)
                         {
-                            if (valor != 1000)
-                            {
-                            //Thread.Sleep(1);
                             valor++;
-                                Console.SetCursorPosition(2, 2);
-                                Console.Write(valor + " Sumado por Suma");
-                            }
-                            else
+                            if (valor == 1000)
                             {
                                 run = false;
                             }
+                            //Console.SetCursorPosition(2, 2);
+                            Console.WriteLine(valor + " Sumado por Suma");
                         }
                     }
-                });
-                Thread tRestar = new Thread(() =>
+                }
+            });
+            Thread tRestar = new Thread(() =>
+            {
+                while (run)
                 {
-                    while (run)
+                    lock (l)
                     {
-                        lock (l)
+                        if (run)
                         {
-                            if (valor != -1000)
-                            {
-                            //Thread.Sleep(1);
                             valor--;
-                                Console.SetCursorPosition(2, 2);
-                                Console.Write(valor + " Restado por Resta");
-                            }
-                            else
+                            if (valor == -1000)
                             {
                                 run = false;
                             }
+                            //Console.SetCursorPosition(2, 2);
+                            Console.WriteLine(valor + " Restado por Resta");
                         }
                     }
-                });
+                }
+            });
 
-                tSumar.Priority = ThreadPriority.Highest;
-                tRestar.Priority = ThreadPriority.Lowest;
-                tSumar.Start();
-                tRestar.Start();
-            }
+            tSumar.Start();
+            tRestar.Start();
+
             Console.ReadKey();
         }
     }
