@@ -11,36 +11,59 @@ namespace SERV_tema1_ej1
             int cont = 1;
             int choice = 0;
 
-            Console.WriteLine("---Enter the number of the method you want to run---");
-            foreach (string nombre in options)
+            try
             {
-                Console.WriteLine(cont + ": " + nombre);
-                cont++;
+                do
+                {
+                    cont = 1;
+
+                    Console.WriteLine("---Enter the number of the method you want to run---");
+                    foreach (string nombre in options)
+                    {
+                        Console.WriteLine(cont + ": " + nombre);
+                        cont++;
+                    }
+                    Console.WriteLine(cont + ": Exit");
+
+                    choice = int.Parse(Console.ReadLine());
+
+                    if (choice != cont && (choice > 0 && choice < cont))
+                    {
+                        choice--;
+                        functions[choice]();
+                    }
+                    else if (choice > cont)
+                    {
+                        Console.WriteLine("Enter a number lesser than {0}", cont);
+                    }
+                    else
+                    {
+                        Console.WriteLine("See ya");
+                    }
+                } while (choice != cont);
+
             }
-
-            choice = int.Parse(Console.ReadLine());
-
-            choice--;
-            functions[choice]();
-        }
-
-        static void f1()
-        {
-            Console.WriteLine("\nA");
-        }
-        static void f2()
-        {
-            Console.WriteLine("\nB");
-        }
-        static void f3()
-        {
-            Console.WriteLine("\nC");
+            catch (FormatException)
+            {
+                Console.WriteLine("Enter a number lesser than {0}", cont);
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Enter a number lesser than {0}", cont);
+            }
         }
 
         public static void Main(string[] args)
         {
             Program p = new Program();
-            p.MenuGenerator(new string[] { "Op1", "Op2", "Op3" }, new MyDelegate[] { f1, f2, f3 });
+            p.MenuGenerator(new string[] { "Op1", "Op2", "Op3","op4" },
+                new MyDelegate[]
+                {
+                () => Console.WriteLine("\nOption A"),
+                () => Console.WriteLine("\nOption B"),
+                () => Console.WriteLine("\nOption C"),
+                () => Console.WriteLine("\nOption D")
+                });
             Console.ReadKey();
         }
     }
