@@ -11,9 +11,9 @@ namespace SERV_tema1_ej1
             int cont = 1;
             int choice = 0;
 
-            try
+            do
             {
-                do
+                try
                 {
                     cont = 1;
 
@@ -31,38 +31,42 @@ namespace SERV_tema1_ej1
                     {
                         choice--;
                         functions[choice]();
+
                     }
                     else if (choice > cont)
                     {
                         Console.WriteLine("Enter a number lesser than {0}", cont);
                     }
+                    else if (options.Length != functions.Length)
+                    {
+                        Console.WriteLine("Number of options doesn't match number of functions. No function exists within that option.");
+                    }
                     else
                     {
                         Console.WriteLine("See ya");
                     }
-                } while (choice != cont);
-
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Enter a number lesser than {0}", cont);
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("Enter a number lesser than {0}", cont);
-            }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Enter a number lesser than {0}", cont);
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Enter a number lesser than {0}", cont);
+                }
+            } while (choice != cont);
         }
 
         public static void Main(string[] args)
         {
             Program p = new Program();
-            p.MenuGenerator(new string[] { "Op1", "Op2", "Op3","op4" },
+            p.MenuGenerator(new string[] { "Op1", "Op2", "Op3", "Op4" },
                 new MyDelegate[]
                 {
                 () => Console.WriteLine("\nOption A"),
                 () => Console.WriteLine("\nOption B"),
                 () => Console.WriteLine("\nOption C"),
-                () => Console.WriteLine("\nOption D")
+                () => Console.WriteLine("\nOption D"),
                 });
             Console.ReadKey();
         }
