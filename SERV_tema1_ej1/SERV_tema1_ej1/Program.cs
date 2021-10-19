@@ -37,7 +37,7 @@ namespace SERV_tema1_ej1
                     {
                         Console.WriteLine("Enter a number lesser than {0}", cont);
                     }
-                    else if (options.Length != functions.Length)
+                    else if (options.Length != functions.Length) //No se repite al pasar por esta sección
                     {
                         Console.WriteLine("Number of options doesn't match number of functions. No function exists within that option.");
                     }
