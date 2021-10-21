@@ -9,75 +9,65 @@ namespace SERV_tema1_ej3
         static bool finished = false;
         static object l = new object();
 
-        public static void increment()
-        {
-            while (!finished)
-            {
-                lock (l)
-                {
-                    Console.WriteLine("Incrementa {0}", num);
-                    num++;
-                    if (num == 1000)
-                    {
-                        finished = true;
-                    }
-                }
-            }
-        }
-
-        public static void decrement()
-        {
-            while (!finished)
-            {
-                lock (l)
-                {
-                    Console.WriteLine("Decrementa {0}", num);
-                    num--;
-
-                    if (num == -1000)
-                    {
-                        finished = true;
-                    }
-                }
-            }
-        }
-
         static void Main(string[] args)
         {
-            Thread tIncrease = new Thread(increment);
-            Thread tDecrease = new Thread(decrement);
+            Thread tIncrease = new Thread(
+                () =>
+                {
+                    while (!finished)
+                    {
+                        lock (l)
+                        {
+                            if (!finished)
+                            {
+                                num++;
+                                Console.WriteLine("Incrementa {0}", num);
+
+                                if (num == 1000)
+                                {
+                                    finished = true;
+                                }
+                            }
+                        }
+                    }
+                });
+            Thread tDecrease = new Thread(
+                () =>
+                {
+                    while (!finished)
+                    {
+                        lock (l)
+                        {
+                            if (!finished)
+                            {
+                                num--;
+                                Console.WriteLine("Decrementa {0}", num);
+
+                                if (num == -1000)
+                                {
+                                    finished = true;
+                                }
+                            }
+                        }
+                    }
+                });
 
             tIncrease.Start();
             tDecrease.Start();
 
-            Console.ReadKey();
+            tIncrease.Join();
+            tDecrease.Join();
 
-            if (finished)
+            if (num == 1000)
             {
-                tIncrease.Join();
-                tDecrease.Join();
-
-                if (num == 999)
-                {
-                    num++;
-                }
-
-                if (num == -999)
-                {
-                    num--;
-                }
-
-                if (num == 1000)
-                {
-                    Console.WriteLine("\nGANADOR: INCREMENTO");
-                }
-                else
-                {
-                    Console.WriteLine("\nGANADOR: DECREMENTO");
-                }
-
-                Console.WriteLine(num);
+                Console.WriteLine("\nGANADOR: INCREMENTO");
             }
+            else
+            {
+                Console.WriteLine("\nGANADOR: DECREMENTO");
+            }
+
+            Console.WriteLine(num);
         }
     }
 }
