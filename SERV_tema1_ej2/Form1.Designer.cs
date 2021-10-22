@@ -43,25 +43,26 @@
             // 
             this.textBox1.BackColor = System.Drawing.Color.White;
             this.textBox1.Location = new System.Drawing.Point(20, 55);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(384, 287);
-            this.textBox1.TabIndex = 0;
+            this.textBox1.TabIndex = 1;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(20, 22);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(384, 20);
-            this.textBox2.TabIndex = 1;
+            this.textBox2.TabIndex = 0;
             // 
             // btnView
             // 
             this.btnView.Location = new System.Drawing.Point(425, 55);
-            this.btnView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnView.Margin = new System.Windows.Forms.Padding(2);
             this.btnView.Name = "btnView";
             this.btnView.Size = new System.Drawing.Size(67, 37);
             this.btnView.TabIndex = 2;
@@ -72,7 +73,7 @@
             // btnInfo
             // 
             this.btnInfo.Location = new System.Drawing.Point(425, 107);
-            this.btnInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnInfo.Margin = new System.Windows.Forms.Padding(2);
             this.btnInfo.Name = "btnInfo";
             this.btnInfo.Size = new System.Drawing.Size(67, 37);
             this.btnInfo.TabIndex = 3;
@@ -83,7 +84,7 @@
             // btnClose
             // 
             this.btnClose.Location = new System.Drawing.Point(425, 158);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(67, 37);
             this.btnClose.TabIndex = 4;
@@ -94,7 +95,7 @@
             // btnKill
             // 
             this.btnKill.Location = new System.Drawing.Point(425, 210);
-            this.btnKill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnKill.Margin = new System.Windows.Forms.Padding(2);
             this.btnKill.Name = "btnKill";
             this.btnKill.Size = new System.Drawing.Size(67, 37);
             this.btnKill.TabIndex = 5;
@@ -105,10 +106,10 @@
             // btnStartsWith
             // 
             this.btnStartsWith.Location = new System.Drawing.Point(425, 305);
-            this.btnStartsWith.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnStartsWith.Margin = new System.Windows.Forms.Padding(2);
             this.btnStartsWith.Name = "btnStartsWith";
             this.btnStartsWith.Size = new System.Drawing.Size(67, 37);
-            this.btnStartsWith.TabIndex = 6;
+            this.btnStartsWith.TabIndex = 7;
             this.btnStartsWith.Text = "Starts\r\nWith...";
             this.btnStartsWith.UseVisualStyleBackColor = true;
             this.btnStartsWith.Click += new System.EventHandler(this.btnStartsWith_Click);
@@ -119,7 +120,7 @@
             this.btnRunApp.Margin = new System.Windows.Forms.Padding(2);
             this.btnRunApp.Name = "btnRunApp";
             this.btnRunApp.Size = new System.Drawing.Size(67, 37);
-            this.btnRunApp.TabIndex = 7;
+            this.btnRunApp.TabIndex = 6;
             this.btnRunApp.Text = "Run App";
             this.btnRunApp.UseVisualStyleBackColor = true;
             this.btnRunApp.Click += new System.EventHandler(this.btnRunApp_Click);
@@ -136,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 377);
+            this.ClientSize = new System.Drawing.Size(558, 377);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRunApp);
             this.Controls.Add(this.btnStartsWith);
@@ -146,7 +147,7 @@
             this.Controls.Add(this.btnView);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
