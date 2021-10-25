@@ -20,7 +20,6 @@ namespace SERV_tema1_ej2
         public Form1()
         {
             InitializeComponent();
-            //textBox1.Text.Font = new Font("Lucida Console", FontStyle.Bold, 16);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -47,55 +46,70 @@ namespace SERV_tema1_ej2
         {
             textBox1.Text = "";
 
+            getPID(int.Parse(textBox2.Text));
+
             try
             {
-                getPID(int.Parse(textBox2.Text));
-                textBox1.Text = $"PID: {process.Id}, ProcessName: {process.ProcessName}, WindowTitle: {process.MainWindowTitle}";
+                if (process != null)
+                {
+                    ProcessModuleCollection modules = process.Modules;
+                    ProcessThreadCollection threads = process.Threads;
+
+                    textBox1.AppendText($"PID: {process.Id}, ProcessName: {process.ProcessName}, WindowTitle: {process.MainWindowTitle} {Environment.NewLine}");
+
+                    foreach (ProcessThread pt in threads)
+                    {
+                        textBox1.AppendText($"Thread ID: {pt.Id}, StartTime: {pt.StartTime.ToShortTimeString()}, PriorityLevel: {pt.PriorityLevel}, ThreadState: {pt.ThreadState} {Environment.NewLine}");
+                    }
+
+                    foreach (ProcessModule pm in modules)
+                    {
+                        textBox1.AppendText($"{pm.ModuleName} ");
+                    }
+                }
             }
-            catch (FormatException)
+            catch (Win32Exception)
             {
-                label1.Text = "(!) Programa no encontrado";
+
             }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            try
+            getPID(int.Parse(textBox2.Text));
+
+            if (process != null)
             {
-                getPID(int.Parse(textBox2.Text));
                 process.CloseMainWindow();
-            }
-            catch (FormatException)
-            {
-                label1.Text = "(!) Programa no encontrado";
             }
         }
 
         private void btnKill_Click(object sender, EventArgs e)
         {
-            try
+
+            getPID(int.Parse(textBox2.Text));
+
+            if (process != null)
             {
-                getPID(int.Parse(textBox2.Text));
                 process.Kill();
-            }
-            catch (FormatException)
-            {
-                label1.Text = "(!) Programa no encontrado";
             }
         }
 
         private void btnRunApp_Click(object sender, EventArgs e)
         {
             string programa = textBox2.Text;
+
             try
             {
-                //processes = Process.GetProcessesByName(textBox2.Text.ToString());
                 process = Process.Start(programa);
             }
-            catch (Exception ex)
+            catch (ArgumentException)
             {
-                if (ex is ArgumentException || ex is Win32Exception)
-                    label1.Text = "(!) Programa no encontrado";
+                label1.Text = "(!) Programa no encontrado";
+            }
+            catch (Win32Exception)
+            {
+                label1.Text = "(!) Programa no encontrado";
             }
         }
 
@@ -111,24 +125,24 @@ namespace SERV_tema1_ej2
                 {
                     prcs.Add(p);
                 }
+            }
 
-            }
-            foreach (Process alvaro in prcs )
-            {
-                textBox1.AppendText ($"PID: {alvaro.Id}, ProcessName: {alvaro.ProcessName}, WindowTitle: {alvaro.MainWindowTitle} {Environment.NewLine}");
-            }
+            prcs.ForEach(process => textBox1.AppendText($"PID: {process.Id}, ProcessName: {process.ProcessName}, WindowTitle: {process.MainWindowTitle} {Environment.NewLine}"));
         }
 
-        public void getPID(int pid) // Con return int da nullreferenceexception si no encuentra
+        public void getPID(int pid)
         {
             try
             {
                 process = Process.GetProcessById(pid);
             }
-            catch (Exception ex)
+            catch (ArgumentException)
             {
-                if (ex is ArgumentException || ex is FormatException)
-                    label1.Text = "(!) Programa no encontrado";
+                label1.Text = "(!) Programa no encontrado";
+            }
+            catch (Win32Exception)
+            {
+                label1.Text = "(!) Programa no encontrado";
             }
         }
 

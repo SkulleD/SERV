@@ -42,13 +42,14 @@
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.White;
+            this.textBox1.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(20, 55);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(384, 287);
+            this.textBox1.Size = new System.Drawing.Size(674, 287);
             this.textBox1.TabIndex = 1;
             // 
             // textBox2
@@ -56,12 +57,12 @@
             this.textBox2.Location = new System.Drawing.Point(20, 22);
             this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(384, 20);
+            this.textBox2.Size = new System.Drawing.Size(674, 20);
             this.textBox2.TabIndex = 0;
             // 
             // btnView
             // 
-            this.btnView.Location = new System.Drawing.Point(425, 55);
+            this.btnView.Location = new System.Drawing.Point(710, 55);
             this.btnView.Margin = new System.Windows.Forms.Padding(2);
             this.btnView.Name = "btnView";
             this.btnView.Size = new System.Drawing.Size(67, 37);
@@ -72,7 +73,7 @@
             // 
             // btnInfo
             // 
-            this.btnInfo.Location = new System.Drawing.Point(425, 107);
+            this.btnInfo.Location = new System.Drawing.Point(710, 107);
             this.btnInfo.Margin = new System.Windows.Forms.Padding(2);
             this.btnInfo.Name = "btnInfo";
             this.btnInfo.Size = new System.Drawing.Size(67, 37);
@@ -83,7 +84,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(425, 158);
+            this.btnClose.Location = new System.Drawing.Point(710, 158);
             this.btnClose.Margin = new System.Windows.Forms.Padding(2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(67, 37);
@@ -94,7 +95,7 @@
             // 
             // btnKill
             // 
-            this.btnKill.Location = new System.Drawing.Point(425, 210);
+            this.btnKill.Location = new System.Drawing.Point(710, 210);
             this.btnKill.Margin = new System.Windows.Forms.Padding(2);
             this.btnKill.Name = "btnKill";
             this.btnKill.Size = new System.Drawing.Size(67, 37);
@@ -105,7 +106,7 @@
             // 
             // btnStartsWith
             // 
-            this.btnStartsWith.Location = new System.Drawing.Point(425, 305);
+            this.btnStartsWith.Location = new System.Drawing.Point(710, 305);
             this.btnStartsWith.Margin = new System.Windows.Forms.Padding(2);
             this.btnStartsWith.Name = "btnStartsWith";
             this.btnStartsWith.Size = new System.Drawing.Size(67, 37);
@@ -116,7 +117,7 @@
             // 
             // btnRunApp
             // 
-            this.btnRunApp.Location = new System.Drawing.Point(425, 260);
+            this.btnRunApp.Location = new System.Drawing.Point(710, 260);
             this.btnRunApp.Margin = new System.Windows.Forms.Padding(2);
             this.btnRunApp.Name = "btnRunApp";
             this.btnRunApp.Size = new System.Drawing.Size(67, 37);
@@ -137,7 +138,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 377);
+            this.ClientSize = new System.Drawing.Size(807, 377);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRunApp);
             this.Controls.Add(this.btnStartsWith);
