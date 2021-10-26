@@ -46,10 +46,9 @@ namespace SERV_tema1_ej2
         {
             textBox1.Text = "";
 
-            getPID(int.Parse(textBox2.Text));
-
             try
             {
+                getPID(int.Parse(textBox2.Text));
                 if (process != null)
                 {
                     ProcessModuleCollection modules = process.Modules;
@@ -72,26 +71,42 @@ namespace SERV_tema1_ej2
             {
 
             }
+            catch (FormatException)
+            {
+                label1.Text = "(!) Programa no encontrado";
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            getPID(int.Parse(textBox2.Text));
-
-            if (process != null)
+            try
             {
-                process.CloseMainWindow();
+                getPID(int.Parse(textBox2.Text));
+
+                if (process != null)
+                {
+                    process.CloseMainWindow();
+                }
+            } catch (FormatException)
+            {
+                label1.Text = "(!) Programa no encontrado";
             }
         }
 
         private void btnKill_Click(object sender, EventArgs e)
         {
 
-            getPID(int.Parse(textBox2.Text));
-
-            if (process != null)
+            try
             {
-                process.Kill();
+                getPID(int.Parse(textBox2.Text));
+
+                if (process != null)
+                {
+                    process.Kill();
+                }
+            } catch (FormatException)
+            {
+                label1.Text = "(!) Programa no encontrado";
             }
         }
 
@@ -113,7 +128,7 @@ namespace SERV_tema1_ej2
             }
         }
 
-        private void btnStartsWith_Click(object sender, EventArgs e) // Array.Find, Array.Foreach y .ToArray
+        private void btnStartsWith_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
             List<Process> prcs = new List<Process>();
