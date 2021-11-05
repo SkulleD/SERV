@@ -95,7 +95,6 @@ namespace SERV_tema1_ej2
 
         private void btnKill_Click(object sender, EventArgs e)
         {
-
             try
             {
                 getPID(int.Parse(textBox2.Text));
@@ -112,18 +111,26 @@ namespace SERV_tema1_ej2
 
         private void btnRunApp_Click(object sender, EventArgs e)
         {
-            string programa = textBox2.Text;
+            string programa = "";
+            if (!String.IsNullOrEmpty(textBox2.Text))
+            {
+                programa = textBox2.Text;
 
-            try
+                try
+                {
+                    process = Process.Start(programa);
+                }
+                catch (ArgumentException)
+                {
+                    label1.Text = "(!) Programa no encontrado";
+                }
+                catch (Win32Exception)
+                {
+                    label1.Text = "(!) Programa no encontrado";
+                }
+            } else
             {
-                process = Process.Start(programa);
-            }
-            catch (ArgumentException)
-            {
-                label1.Text = "(!) Programa no encontrado";
-            }
-            catch (Win32Exception)
-            {
+                programa = "";
                 label1.Text = "(!) Programa no encontrado";
             }
         }
@@ -133,10 +140,11 @@ namespace SERV_tema1_ej2
             textBox1.Text = "";
             List<Process> prcs = new List<Process>();
             processes = Process.GetProcesses();
+            string processText = textBox2.Text.Trim();
 
             foreach (Process p in processes)
             {
-                if (p.ProcessName.StartsWith(textBox2.Text))
+                if (p.ProcessName.StartsWith(processText) || p.ProcessName.StartsWith(processText.ToLower()) || p.ProcessName.StartsWith(processText.ToUpper()))
                 {
                     prcs.Add(p);
                 }
