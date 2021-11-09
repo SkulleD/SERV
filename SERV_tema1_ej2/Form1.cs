@@ -29,6 +29,36 @@ namespace SERV_tema1_ej2
 
         private void btnView_Click(object sender, EventArgs e)
         {
+            GetProcesses();
+        }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            GetProcessInfo();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            CloseProcess();
+        }
+
+        private void btnKill_Click(object sender, EventArgs e)
+        {
+            KillProcess();
+        }
+
+        private void btnRunApp_Click(object sender, EventArgs e)
+        {
+            RunApp();
+        }
+
+        private void btnStartsWith_Click(object sender, EventArgs e)
+        {
+            StartsWith();
+        }
+
+        private void GetProcesses()
+        {
             string name;
             string windowTitle;
             textBox1.Text = "";
@@ -38,11 +68,11 @@ namespace SERV_tema1_ej2
             {
                 name = stringCropper(p.ProcessName);
                 windowTitle = stringCropper(p.MainWindowTitle);
-                textBox1.AppendText($"PID: {p.Id}, ProcessName: {name}, WindowTitle: {windowTitle} {Environment.NewLine}");
+                textBox1.AppendText($"PID: {p.Id,5} | ProcessName: {name,15} | WindowTitle: {windowTitle} {Environment.NewLine}");
             }
         }
 
-        private void btnInfo_Click(object sender, EventArgs e)
+        private void GetProcessInfo()
         {
             textBox1.Text = "";
 
@@ -54,7 +84,7 @@ namespace SERV_tema1_ej2
                     ProcessModuleCollection modules = process.Modules;
                     ProcessThreadCollection threads = process.Threads;
 
-                    textBox1.AppendText($"PID: {process.Id}, ProcessName: {process.ProcessName}, WindowTitle: {process.MainWindowTitle} {Environment.NewLine}");
+                    textBox1.AppendText($"PID: {process.Id,5}, ProcessName: {process.ProcessName,15}, WindowTitle: {process.MainWindowTitle} {Environment.NewLine}");
 
                     foreach (ProcessThread pt in threads)
                     {
@@ -67,17 +97,13 @@ namespace SERV_tema1_ej2
                     }
                 }
             }
-            catch (Win32Exception)
-            {
-
-            }
-            catch (FormatException)
+            catch (Exception ex) when (ex is Win32Exception || ex is FormatException)
             {
                 label1.Text = "(!) Programa no encontrado";
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void CloseProcess()
         {
             try
             {
@@ -87,13 +113,14 @@ namespace SERV_tema1_ej2
                 {
                     process.CloseMainWindow();
                 }
-            } catch (FormatException)
+            }
+            catch (Exception ex) when (ex is FormatException || ex is ArgumentException)
             {
                 label1.Text = "(!) Programa no encontrado";
             }
         }
 
-        private void btnKill_Click(object sender, EventArgs e)
+        private void KillProcess()
         {
             try
             {
@@ -103,13 +130,14 @@ namespace SERV_tema1_ej2
                 {
                     process.Kill();
                 }
-            } catch (FormatException)
+            }
+            catch (Exception ex) when (ex is FormatException || ex is ArgumentException || ex is Win32Exception)
             {
                 label1.Text = "(!) Programa no encontrado";
             }
         }
 
-        private void btnRunApp_Click(object sender, EventArgs e)
+        private void RunApp()
         {
             string programa = "";
             if (!String.IsNullOrEmpty(textBox2.Text))
@@ -120,22 +148,19 @@ namespace SERV_tema1_ej2
                 {
                     process = Process.Start(programa);
                 }
-                catch (ArgumentException)
+                catch (Exception ex) when (ex is ArgumentException || ex is Win32Exception)
                 {
                     label1.Text = "(!) Programa no encontrado";
                 }
-                catch (Win32Exception)
-                {
-                    label1.Text = "(!) Programa no encontrado";
-                }
-            } else
+            }
+            else
             {
                 programa = "";
                 label1.Text = "(!) Programa no encontrado";
             }
         }
 
-        private void btnStartsWith_Click(object sender, EventArgs e)
+        private void StartsWith()
         {
             textBox1.Text = "";
             List<Process> prcs = new List<Process>();
@@ -150,26 +175,22 @@ namespace SERV_tema1_ej2
                 }
             }
 
-            prcs.ForEach(process => textBox1.AppendText($"PID: {process.Id}, ProcessName: {process.ProcessName}, WindowTitle: {process.MainWindowTitle} {Environment.NewLine}"));
+            prcs.ForEach(process => textBox1.AppendText($"PID: {process.Id,5}, ProcessName: {process.ProcessName,15}, WindowTitle: {process.MainWindowTitle} {Environment.NewLine}"));
         }
 
-        public void getPID(int pid)
+        private void getPID(int pid)
         {
             try
             {
                 process = Process.GetProcessById(pid);
             }
-            catch (ArgumentException)
-            {
-                label1.Text = "(!) Programa no encontrado";
-            }
-            catch (Win32Exception)
+            catch (Exception ex) when (ex is ArgumentException || ex is Win32Exception)
             {
                 label1.Text = "(!) Programa no encontrado";
             }
         }
 
-        public string stringCropper(string titulo)
+        private string stringCropper(string titulo)
         {
             if (!string.IsNullOrEmpty(titulo) && titulo.Length > 12)
             {
