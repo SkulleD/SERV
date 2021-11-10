@@ -1,0 +1,14 @@
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\bin\Debug\netcoreapp3.1\SERV_tema1_ej4.exe
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\bin\Debug\netcoreapp3.1\SERV_tema1_ej4.deps.json
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\bin\Debug\netcoreapp3.1\SERV_tema1_ej4.runtimeconfig.json
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\bin\Debug\netcoreapp3.1\SERV_tema1_ej4.runtimeconfig.dev.json
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\bin\Debug\netcoreapp3.1\SERV_tema1_ej4.dll
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\bin\Debug\netcoreapp3.1\SERV_tema1_ej4.pdb
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.csproj.AssemblyReference.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.AssemblyInfoInputs.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.AssemblyInfo.cs
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.csproj.CoreCompileInputs.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.dll
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.pdb
+C:\Users\AlvaroVila\source\repos\SERV_tema1_ej4\SERV_tema1_ej4\obj\Debug\netcoreapp3.1\SERV_tema1_ej4.genruntimeconfig.cache

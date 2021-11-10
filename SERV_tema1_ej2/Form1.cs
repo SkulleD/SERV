@@ -63,13 +63,19 @@ namespace SERV_tema1_ej2
             string windowTitle;
             textBox1.Text = "";
             processes = Process.GetProcesses();
+            List<Process> prcsList = new List<Process>();
 
             foreach (Process p in processes)
             {
-                name = stringCropper(p.ProcessName);
-                windowTitle = stringCropper(p.MainWindowTitle);
-                textBox1.AppendText($"PID: {p.Id,5} | ProcessName: {name,15} | WindowTitle: {windowTitle} {Environment.NewLine}");
+                prcsList.Add(p);
             }
+
+            prcsList.ForEach(process =>   // Mejor con Array.ForEach
+            {
+                name = stringCropper(process.ProcessName);
+                windowTitle = stringCropper(process.MainWindowTitle);
+                textBox1.AppendText($"PID: {process.Id,5} | ProcessName: {name,15} | WindowTitle: {windowTitle} {Environment.NewLine}");
+            });
         }
 
         private void GetProcessInfo()
@@ -167,9 +173,9 @@ namespace SERV_tema1_ej2
             processes = Process.GetProcesses();
             string processText = textBox2.Text.Trim();
 
-            foreach (Process p in processes)
+            foreach (Process p in processes)  // Se puede hacer conArray.FindAll
             {
-                if (p.ProcessName.StartsWith(processText) || p.ProcessName.StartsWith(processText.ToLower()) || p.ProcessName.StartsWith(processText.ToUpper()))
+                if (p.ProcessName.StartsWith(processText.ToLower()))
                 {
                     prcs.Add(p);
                 }
