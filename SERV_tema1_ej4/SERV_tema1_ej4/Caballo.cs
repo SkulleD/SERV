@@ -7,13 +7,13 @@ namespace SERV_tema1_ej4
     class Caballo
     {
         public int Position { set; get; }
-        public string Name{ set; get; }
+        public int Number{ set; get; }
         public int Y { set; get; }
 
-        public Caballo(string name, int y)
+        public Caballo(int number, int y)
         {
             this.Position = 0;
-            this.Name = name;
+            this.Number = number;
             this.Y = y;
         }
 
