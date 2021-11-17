@@ -13,7 +13,9 @@ namespace SERV_tema1_ej4
         int bet = 0;
         bool runboth = true;
         string again = "";
-        string empty = "                                                                                        ";
+        string empty = "                                                                                                                                      ";
+        int maxNumber = 100;
+        Random random = new Random();
 
         public void CorrerMain(object i)
         {
@@ -22,22 +24,21 @@ namespace SERV_tema1_ej4
 
             while (!meta)
             {
+                Thread.Sleep(random.Next(1, 450));
+
                 lock (l)
                 {
-                    Monitor.Pulse(l);
-                    if (((Caballo)i).Position < 50 && !meta)
+                    if (!meta)
                     {
+
                         Console.SetCursorPosition(((Caballo)i).Correr(), ((Caballo)i).Y);
                         Console.Write("*");
-                        Thread.Sleep(50);
-                        Monitor.Wait(l);
-                    }
-                    else
-                    {
-                        winner = ((Caballo)i).Number;
-                        Console.SetCursorPosition(0, caballos.Length);
-                        Console.WriteLine($"\n----> The winner is {winner}!");
-                        meta = true;
+
+                        if (((Caballo)i).Position == ((Caballo)i).Finishline)
+                        {
+                            meta = true;
+                            winner = ((Caballo)i).Number;
+                        }
                     }
                 }
             }
@@ -45,9 +46,9 @@ namespace SERV_tema1_ej4
 
         public void StartCarrera()
         {
-            Thread[] carrera = new Thread[5];
+            Thread[] carrera = new Thread[maxNumber];
             Caballo caballo;
-            caballos = new Caballo[5];
+            caballos = new Caballo[maxNumber];
             int number = 1;
 
             for (int i = 0; i < caballos.Length; i++)
@@ -66,6 +67,20 @@ namespace SERV_tema1_ej4
 
             if (meta)
             {
+                Console.SetCursorPosition(0, caballos.Length + 1);
+                Console.WriteLine($"\n--> The winner is {winner}!");
+
+                if (bet == winner)
+                {
+                    Console.Write(empty);
+                    Console.WriteLine("You won the bet!!!");
+                }
+                else
+                {
+                    Console.Write(empty);
+                    Console.WriteLine("You lost the bet...");
+                }
+
                 RunAgain();
             }
         }
@@ -74,7 +89,8 @@ namespace SERV_tema1_ej4
         {
             do
             {
-                caballos = new Caballo[5];
+                caballos = new Caballo[maxNumber];
+
                 Console.SetCursorPosition(0, caballos.Length + 4);
                 Console.Write(empty);
                 Console.SetCursorPosition(0, caballos.Length + 5);
@@ -84,19 +100,16 @@ namespace SERV_tema1_ej4
 
                 try
                 {
-                    if (bet < caballos.Length)
-                    {
-                        Console.Write(empty);
-                        Console.SetCursorPosition(0, caballos.Length + 3);
-                        bet = int.Parse(Console.ReadLine());
-                        Console.Write(empty);
-                    }
-                    else
+                    Console.Write(empty);
+                    Console.SetCursorPosition(0, caballos.Length + 3);
+                    bet = int.Parse(Console.ReadLine());
+                    Console.Write(empty);
+
+                    if (bet > caballos.Length)
                     {
                         Console.SetCursorPosition(0, caballos.Length + 1);
                         Console.WriteLine("Can't bet on a horse that doesn't exist!");
                         Console.Write(empty);
-
                     }
                 }
                 catch (Exception ex) when (ex is ArgumentException || ex is OverflowException || ex is FormatException)
@@ -109,15 +122,17 @@ namespace SERV_tema1_ej4
             } while (bet > caballos.Length || bet <= 0);
         }
 
-        public void RunBoth()
+        public void RunBoth() // Runs 3 functions but there were only 2 at first
         {
-            caballos = new Caballo[5];
-
             do
             {
+                caballos = new Caballo[maxNumber];
+
                 if (runboth)
                 {
+                    meta = false; // Set to "false" so the race can be started again
                     Apuesta();
+                    MakeFinishline();
                     StartCarrera();
                 }
                 else
@@ -126,16 +141,32 @@ namespace SERV_tema1_ej4
                     Console.SetCursorPosition(0, caballos.Length + 4);
                     Console.WriteLine("See you!");
                 }
-            } while (again.ToUpper().Equals("Y"));
+            } while (again.ToUpper().Equals("Y") && again.Trim().Length == 1);
         }
 
         public void RunAgain()
         {
             Console.Write(empty);
             Console.SetCursorPosition(0, caballos.Length + 4);
-            Console.WriteLine("Do you want to play again? Y/N");
+            Console.WriteLine("Do you want to play again? Y/N or other"); // If not "Y" the program ends
             again = Console.ReadLine();
             Console.Write(empty);
+        }
+
+        public void MakeFinishline()
+        {
+            Caballo horse = new Caballo(0, 0);
+            for (int i = 0; i < caballos.Length; i++)
+            {
+                Console.SetCursorPosition(0, i); // Cleans the last horse race to make room for a new one
+                Console.Write(empty);
+            }
+
+            for (int i = 0; i < caballos.Length; i++)
+            {
+                Console.SetCursorPosition(horse.Finishline, i);
+                Console.WriteLine("||");
+            }
         }
 
         static void Main(string[] args)
