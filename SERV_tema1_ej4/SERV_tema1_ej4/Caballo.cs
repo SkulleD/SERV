@@ -16,7 +16,7 @@ namespace SERV_tema1_ej4
             this.Position = 0;
             this.Number = number;
             this.Y = y;
-            this.Finishline = 230; // Length of the race
+            this.Finishline = 30; // Length of the race
         }
 
         public int Correr()

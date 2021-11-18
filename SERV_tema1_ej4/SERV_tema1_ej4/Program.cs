@@ -14,30 +14,30 @@ namespace SERV_tema1_ej4
         bool runboth = true;
         string again = "";
         string empty = "                                                                                                                                      ";
-        int maxNumber = 100;
+        int maxNumber = 6;
         Random random = new Random();
 
         public void CorrerMain(object i)
         {
+            Caballo horse = (Caballo)i;
             Console.SetCursorPosition(0, caballos.Length + 1);
             Console.Write(empty);
 
             while (!meta)
             {
-                Thread.Sleep(random.Next(1, 450));
+                Thread.Sleep(random.Next(1, 350));
 
                 lock (l)
                 {
                     if (!meta)
                     {
-
-                        Console.SetCursorPosition(((Caballo)i).Correr(), ((Caballo)i).Y);
+                        Console.SetCursorPosition(horse.Correr(), horse.Y);
                         Console.Write("*");
 
-                        if (((Caballo)i).Position == ((Caballo)i).Finishline)
+                        if (horse.Position == horse.Finishline)
                         {
                             meta = true;
-                            winner = ((Caballo)i).Number;
+                            winner = horse.Number;
                         }
                     }
                 }
@@ -147,7 +147,7 @@ namespace SERV_tema1_ej4
         public void RunAgain()
         {
             Console.Write(empty);
-            Console.SetCursorPosition(0, caballos.Length + 4);
+            Console.SetCursorPosition(0, caballos.Length + 5);
             Console.WriteLine("Do you want to play again? Y/N or other"); // If not "Y" the program ends
             again = Console.ReadLine();
             Console.Write(empty);
