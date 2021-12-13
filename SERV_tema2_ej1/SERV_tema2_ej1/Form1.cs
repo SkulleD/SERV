@@ -11,13 +11,15 @@ using System.Windows.Forms;
 
 namespace SERV_tema2_ej1
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form // TODO ".. no va bien", "que no salga este directorio al poner otra unidad", "el if de FormClosing"
     {
         DirectoryInfo dirInfo;
         FileInfo fileInfo;
         string dirActual = "";
         Form2 form2;
         DialogResult res;
+        string fileSizeText = "";
+        int fileSize = 0;
 
         public Form1()
         {
@@ -26,20 +28,17 @@ namespace SERV_tema2_ej1
 
         private void btnCambiar_Click(object sender, EventArgs e)
         {
-
             dirActual = txtDirectorio.Text;
             string dirEntorno = Environment.ExpandEnvironmentVariables(dirActual);
+            dirActual = dirEntorno;
 
             try
             {
-                if (Directory.Exists(dirEntorno) || Directory.Exists(dirActual))
+                if (Directory.Exists(dirEntorno))
                 {
+                    txtDirectorio.Text = dirActual;
                     Directory.SetCurrentDirectory(dirEntorno);
                     lblWarningDir.Text = "";
-                }
-                else
-                {
-                    lblWarningDir.Text = "Directory not found!";
                 }
 
                 dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
@@ -54,29 +53,58 @@ namespace SERV_tema2_ej1
 
         private void rellenaDirectorios()
         {
+            listBox.Items.Clear();
+            listBox.Items.Add("..");
+
             try
             {
-                listBox.Items.Clear();
-                listBox.Items.Add("..");
                 foreach (DirectoryInfo dir in dirInfo.GetDirectories())
                 {
                     listBox.Items.Add(dir.Name);
                 }
-            } catch (UnauthorizedAccessException)
+            }
+            catch (UnauthorizedAccessException)
             {
                 lblWarningDir.Text = "Unauthorized Access!";
             }
-
         }
 
         private void rellenaArchivos()
         {
             listBox2.Items.Clear();
 
-            foreach (FileInfo file in dirInfo.GetFiles())
+            try
             {
-                listBox2.Items.Add(file);
+                foreach (FileInfo file in dirInfo.GetFiles())
+                {
+                    listBox2.Items.Add(file);
+                }
             }
+            catch (UnauthorizedAccessException)
+            {
+                lblWarningDir.Text = "Unauthorized Access!";
+            }
+        }
+
+        private int checkFileSize(FileInfo file)
+        {
+            if ((file.Length / 1024) < 1024)
+            {
+                fileSize = (int)file.Length / 1024;
+                fileSizeText = "KB";
+            }
+            else if (((file.Length / 1024) / 1024) < 1024)
+            {
+                fileSize = (int)((file.Length / 1024) / 1024);
+                fileSizeText = "MB";
+            }
+            else
+            {
+                fileSize = (int)((file.Length / 1024) / 1024) / 1024;
+                fileSizeText = "GB";
+            }
+
+            return fileSize;
         }
 
         private void listBox_SelectedValueChanged(object sender, EventArgs e)
@@ -91,13 +119,14 @@ namespace SERV_tema2_ej1
                     txtDirectorio.Text = dirActual;
                     Directory.SetCurrentDirectory(dirActual);
                     listBox.Items.Clear();
-                    this.btnCambiar_Click(sender, e);
+                    btnCambiar.PerformClick();
                 }
             }
             catch (DirectoryNotFoundException)
             {
                 lblWarningDir.Text = "Directory not found!";
-            } catch (UnauthorizedAccessException)
+            }
+            catch (UnauthorizedAccessException)
             {
                 lblWarningDir.Text = "Unauthorized Access!";
             }
@@ -112,18 +141,30 @@ namespace SERV_tema2_ej1
             if (listBox2.SelectedItem != null)
             {
                 fileInfo = (FileInfo)listBox2.SelectedItem;
+                fileSize = checkFileSize(fileInfo);
 
                 if (fileInfo.Name.EndsWith(".txt"))
                 {
-                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileInfo.Length / 1024} KB";
-                    reader = new StreamReader(fileInfo.FullName);
-                    fileText = reader.ReadToEnd();
-                    reader.Close();
+                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize} {fileSizeText}";
+
+                    using (reader = new StreamReader(fileInfo.FullName))
+                    {
+                        try
+                        {
+                            fileText = reader.ReadToEnd();
+                        }
+                        catch (Exception ex) when (ex is IOException || ex is IOException)
+                        {
+
+                        }
+                    }
+
                     form2 = new Form2(fileInfo.Name, fileText);
                     res = form2.ShowDialog();
-                } else
+                }
+                else
                 {
-                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileInfo.Length / 1024} KB";
+                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize} {fileSizeText}";
                 }
             }
         }
@@ -133,11 +174,7 @@ namespace SERV_tema2_ej1
             if (MessageBox.Show("Exit program?", "SERV Tema 2 ej1",
                MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-
-            }
-            else
-            {
-                e.Cancel = true;
+                e.Cancel = false;
             }
         }
     }

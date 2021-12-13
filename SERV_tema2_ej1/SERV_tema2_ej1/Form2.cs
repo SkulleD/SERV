@@ -13,24 +13,27 @@ namespace SERV_tema2_ej1
 {
     public partial class Form2 : Form
     {
-        string originalText = "";
-
         public Form2(string name, string fileText)
         {
             InitializeComponent();
             this.Text = name;
             textBox1.Text = fileText;
-            originalText = fileText;
         }
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!textBox1.Text.Equals(originalText))
+            if (textBox1.Modified)
             {
                 if (MessageBox.Show("The file has been changed. Do you want to save the changes?",
                     "File changed", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    File.WriteAllText(this.Text, textBox1.Text);
+                    try
+                    {
+                        File.WriteAllText(this.Text, textBox1.Text);
+                    }
+                    catch (Exception ex) when (ex is ArgumentException || ex is ArgumentNullException || ex is PathTooLongException ||
+                    ex is DirectoryNotFoundException || ex is IOException || ex is UnauthorizedAccessException || ex is NotSupportedException)
+                    { }
                 }
             }
         }

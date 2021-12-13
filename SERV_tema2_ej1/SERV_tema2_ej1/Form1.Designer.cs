@@ -59,6 +59,8 @@ namespace SERV_tema2_ej1
             // 
             // listBox
             // 
+            this.listBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(12, 111);
             this.listBox.Name = "listBox";
@@ -85,6 +87,8 @@ namespace SERV_tema2_ej1
             // 
             // listBox2
             // 
+            this.listBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(370, 111);
             this.listBox2.Name = "listBox2";
