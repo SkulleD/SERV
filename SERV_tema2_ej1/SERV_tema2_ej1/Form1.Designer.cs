@@ -45,7 +45,7 @@ namespace SERV_tema2_ej1
             this.txtDirectorio.Name = "txtDirectorio";
             this.txtDirectorio.Size = new System.Drawing.Size(244, 20);
             this.txtDirectorio.TabIndex = 0;
-            this.txtDirectorio.Text = "C:\\Users\\AlvaroVila\\source\\repos";
+            this.txtDirectorio.Text = "C:\\Users\\AlvaroVila\\source\\repos\\SERV_tema2_ej1\\SERV_tema2_ej1";
             // 
             // btnCambiar
             // 
@@ -69,7 +69,7 @@ namespace SERV_tema2_ej1
             // lblDirectorio
             // 
             this.lblDirectorio.AutoSize = true;
-            this.lblDirectorio.Location = new System.Drawing.Point(12, 34);
+            this.lblDirectorio.Location = new System.Drawing.Point(9, 34);
             this.lblDirectorio.Name = "lblDirectorio";
             this.lblDirectorio.Size = new System.Drawing.Size(116, 13);
             this.lblDirectorio.TabIndex = 3;
@@ -78,7 +78,7 @@ namespace SERV_tema2_ej1
             // lblWarningDir
             // 
             this.lblWarningDir.AutoSize = true;
-            this.lblWarningDir.Location = new System.Drawing.Point(193, 77);
+            this.lblWarningDir.Location = new System.Drawing.Point(62, 86);
             this.lblWarningDir.Name = "lblWarningDir";
             this.lblWarningDir.Size = new System.Drawing.Size(0, 13);
             this.lblWarningDir.TabIndex = 4;
@@ -95,7 +95,7 @@ namespace SERV_tema2_ej1
             // lblFileSize
             // 
             this.lblFileSize.AutoSize = true;
-            this.lblFileSize.Location = new System.Drawing.Point(514, 95);
+            this.lblFileSize.Location = new System.Drawing.Point(367, 95);
             this.lblFileSize.Name = "lblFileSize";
             this.lblFileSize.Size = new System.Drawing.Size(0, 13);
             this.lblFileSize.TabIndex = 6;

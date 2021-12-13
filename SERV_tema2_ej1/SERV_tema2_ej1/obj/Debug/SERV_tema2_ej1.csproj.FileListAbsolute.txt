@@ -8,3 +8,4 @@ C:\Users\AlvaroVila\source\repos\SERV_tema2_ej1\SERV_tema2_ej1\obj\Debug\SERV_te
 C:\Users\AlvaroVila\source\repos\SERV_tema2_ej1\SERV_tema2_ej1\obj\Debug\SERV_tema2_ej1.csproj.CoreCompileInputs.cache
 C:\Users\AlvaroVila\source\repos\SERV_tema2_ej1\SERV_tema2_ej1\obj\Debug\SERV_tema2_ej1.exe
 C:\Users\AlvaroVila\source\repos\SERV_tema2_ej1\SERV_tema2_ej1\obj\Debug\SERV_tema2_ej1.pdb
+C:\Users\AlvaroVila\source\repos\SERV_tema2_ej1\SERV_tema2_ej1\obj\Debug\SERV_tema2_ej1.Form2.resources

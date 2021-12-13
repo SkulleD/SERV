@@ -14,9 +14,10 @@ namespace SERV_tema2_ej1
     public partial class Form1 : Form
     {
         DirectoryInfo dirInfo;
+        FileInfo fileInfo;
         string dirActual = "";
-        string fileActual = "";
-        double value = 0;
+        Form2 form2;
+        DialogResult res;
 
         public Form1()
         {
@@ -43,6 +44,7 @@ namespace SERV_tema2_ej1
 
                 dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
                 rellenaDirectorios();
+                rellenaArchivos();
             }
             catch (Exception ex) when (ex is DirectoryNotFoundException || ex is IOException)
             {
@@ -52,12 +54,19 @@ namespace SERV_tema2_ej1
 
         private void rellenaDirectorios()
         {
-            listBox.Items.Clear();
-            listBox.Items.Add("..");
-            foreach (DirectoryInfo dir in dirInfo.GetDirectories())
+            try
             {
-                listBox.Items.Add(dir.Name);
+                listBox.Items.Clear();
+                listBox.Items.Add("..");
+                foreach (DirectoryInfo dir in dirInfo.GetDirectories())
+                {
+                    listBox.Items.Add(dir.Name);
+                }
+            } catch (UnauthorizedAccessException)
+            {
+                lblWarningDir.Text = "Unauthorized Access!";
             }
+
         }
 
         private void rellenaArchivos()
@@ -76,25 +85,47 @@ namespace SERV_tema2_ej1
 
             try
             {
-                dirActual = listBox.SelectedItem.ToString();
-                txtDirectorio.Text = dirActual;
-                Directory.SetCurrentDirectory(dirActual);
-                listBox.Items.Clear();
-                this.btnCambiar_Click(sender, e);
-                rellenaDirectorios();
-                rellenaArchivos();
+                if (listBox.SelectedItem != null)
+                {
+                    dirActual = listBox.SelectedItem.ToString();
+                    txtDirectorio.Text = dirActual;
+                    Directory.SetCurrentDirectory(dirActual);
+                    listBox.Items.Clear();
+                    this.btnCambiar_Click(sender, e);
+                }
             }
             catch (DirectoryNotFoundException)
             {
                 lblWarningDir.Text = "Directory not found!";
+            } catch (UnauthorizedAccessException)
+            {
+                lblWarningDir.Text = "Unauthorized Access!";
             }
         }
 
         private void listBox2_SelectedValueChanged(object sender, EventArgs e)
         {
             lblWarningDir.Text = "";
+            StreamReader reader;
+            string fileText = "";
 
-            fileActual = listBox2.SelectedItem.ToString();
+            if (listBox2.SelectedItem != null)
+            {
+                fileInfo = (FileInfo)listBox2.SelectedItem;
+
+                if (fileInfo.Name.EndsWith(".txt"))
+                {
+                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileInfo.Length / 1024} KB";
+                    reader = new StreamReader(fileInfo.FullName);
+                    fileText = reader.ReadToEnd();
+                    reader.Close();
+                    form2 = new Form2(fileInfo.Name, fileText);
+                    res = form2.ShowDialog();
+                } else
+                {
+                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileInfo.Length / 1024} KB";
+                }
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
