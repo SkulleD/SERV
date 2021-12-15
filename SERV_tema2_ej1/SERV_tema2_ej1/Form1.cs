@@ -11,32 +11,40 @@ using System.Windows.Forms;
 
 namespace SERV_tema2_ej1
 {
-    public partial class Form1 : Form // TODO ".. no va bien", "que no salga este directorio al poner otra unidad", "el if de FormClosing"
+    public partial class Form1 : Form
     {
         DirectoryInfo dirInfo;
         FileInfo fileInfo;
         string dirActual = "";
         Form2 form2;
         DialogResult res;
-        string fileSizeText = "";
-        int fileSize = 0;
+        double fileSize = 0;
 
         public Form1()
         {
             InitializeComponent();
+            dirActual = Directory.GetCurrentDirectory();
+            lblDirActual.Text = dirActual;
         }
 
         private void btnCambiar_Click(object sender, EventArgs e)
         {
-            dirActual = txtDirectorio.Text;
+            if (txtDirectorio.Text.Equals("..")) // Arregla el problema del doble atrás
+            {
+                dirActual = "";
+            } else
+            {
+                dirActual = txtDirectorio.Text;
+            }
+
             string dirEntorno = Environment.ExpandEnvironmentVariables(dirActual);
             dirActual = dirEntorno;
+            lblDirActual.Text = Directory.GetCurrentDirectory();
 
             try
             {
                 if (Directory.Exists(dirEntorno))
                 {
-                    txtDirectorio.Text = dirActual;
                     Directory.SetCurrentDirectory(dirEntorno);
                     lblWarningDir.Text = "";
                 }
@@ -86,22 +94,22 @@ namespace SERV_tema2_ej1
             }
         }
 
-        private int checkFileSize(FileInfo file)
+        private double checkFileSize(FileInfo file)
         {
             if ((file.Length / 1024) < 1024)
             {
-                fileSize = (int)file.Length / 1024;
-                fileSizeText = "KB";
+                fileSize = (float)file.Length / 1024;
+                lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize:F2} KB";
             }
             else if (((file.Length / 1024) / 1024) < 1024)
             {
-                fileSize = (int)((file.Length / 1024) / 1024);
-                fileSizeText = "MB";
+                fileSize = (float)((file.Length / 1024) / 1024);
+                lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize:F2} MB";
             }
             else
             {
-                fileSize = (int)((file.Length / 1024) / 1024) / 1024;
-                fileSizeText = "GB";
+                fileSize = (float)((file.Length / 1024) / 1024) / 1024;
+                lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize:F2} GB";
             }
 
             return fileSize;
@@ -145,8 +153,6 @@ namespace SERV_tema2_ej1
 
                 if (fileInfo.Name.EndsWith(".txt"))
                 {
-                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize} {fileSizeText}";
-
                     using (reader = new StreamReader(fileInfo.FullName))
                     {
                         try
@@ -154,17 +160,11 @@ namespace SERV_tema2_ej1
                             fileText = reader.ReadToEnd();
                         }
                         catch (Exception ex) when (ex is IOException || ex is IOException)
-                        {
-
-                        }
+                        { }
                     }
 
                     form2 = new Form2(fileInfo.Name, fileText);
                     res = form2.ShowDialog();
-                }
-                else
-                {
-                    lblFileSize.Text = $"File: {fileInfo.Name} Size: {fileSize} {fileSizeText}";
                 }
             }
         }
@@ -172,9 +172,9 @@ namespace SERV_tema2_ej1
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show("Exit program?", "SERV Tema 2 ej1",
-               MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+               MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
             {
-                e.Cancel = false;
+                e.Cancel = true;
             }
         }
     }

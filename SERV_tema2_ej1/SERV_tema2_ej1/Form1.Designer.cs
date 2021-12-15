@@ -37,6 +37,7 @@ namespace SERV_tema2_ej1
             this.lblWarningDir = new System.Windows.Forms.Label();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.lblFileSize = new System.Windows.Forms.Label();
+            this.lblDirActual = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtDirectorio
@@ -104,12 +105,21 @@ namespace SERV_tema2_ej1
             this.lblFileSize.Size = new System.Drawing.Size(0, 13);
             this.lblFileSize.TabIndex = 6;
             // 
+            // lblDirActual
+            // 
+            this.lblDirActual.AutoSize = true;
+            this.lblDirActual.Location = new System.Drawing.Point(13, 425);
+            this.lblDirActual.Name = "lblDirActual";
+            this.lblDirActual.Size = new System.Drawing.Size(0, 13);
+            this.lblDirActual.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AcceptButton = this.btnCambiar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(717, 450);
+            this.Controls.Add(this.lblDirActual);
             this.Controls.Add(this.lblFileSize);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.lblWarningDir);
@@ -135,6 +145,7 @@ namespace SERV_tema2_ej1
         private System.Windows.Forms.Label lblWarningDir;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label lblFileSize;
+        private System.Windows.Forms.Label lblDirActual;
     }
 }
 
