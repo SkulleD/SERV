@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SERV_tema2_ej2
@@ -16,13 +11,15 @@ namespace SERV_tema2_ej2
     public partial class Form1 : Form
     {
         static object l = new object();
-        delegate void Buscador(string palabra, TextBox textbox);
+        delegate void Buscador(int contador, TextBox textbox);
         Buscador buscador;
         DirectoryInfo dirInfo;
         Thread[] hilo;
-        ArrayList files = new ArrayList();
+        List<FileInfo> files = new List<FileInfo>();
         string directorio = "";
         string palabra = "";
+        string[] extensiones = { ".txt", ".doc", ".docx", ".odt", ".pdf", ".rtf", ".csv", ".xls", ".xlsx", ".ods",
+                                ".pps", ".ppt", ".ppsx", ".pptx",".ppsm", ".pptm", ".potx", ".odp" };
         bool terminado = false;
 
         public Form1()
@@ -36,61 +33,80 @@ namespace SERV_tema2_ej2
         {
             this.directorio = directorio;
             this.palabra = palabra;
-            string linea = "";
             int numberThreads = 0;
 
             if (Directory.Exists(directorio))
             {
                 Directory.SetCurrentDirectory(directorio);
                 dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
-                lblInfo.Text = "Ta bien";
                 foreach (FileInfo file in dirInfo.GetFiles())
                 {
-                    try
+                    for (int i = 0; i < extensiones.Length; i++)
                     {
-                        Stream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
-                        linea = "";
-
-                        for (int i = 0; i < stream.Length; i++) // Comprueba el archivo para ver si es de texto sencillo o no (solo vale texto sencillo)
+                        if (file.Name.EndsWith(extensiones[i]))
                         {
-                            int chara = stream.ReadByte();
-
-                            if (chara >= 0 && chara <= 127) // Si es un archivo con solo texto sencillo se añade al ArrayList de archivos de texto donde buscar la palabra
-                            {
-                                files.Add(file);
-                                numberThreads++;
-                            }
+                            files.Add(file);
+                            numberThreads++;
                         }
-
-                        stream.Dispose();
-                    }
-                    catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException || ex is IOException || ex is UnauthorizedAccessException)
-                    {
-
                     }
                 }
             }
+
+            lblInfo.Text = "Number of files: " + numberThreads;
 
             hilo = new Thread[numberThreads];
 
             for (int i = 0; i < hilo.Length; i++)
             {
-                hilo[i] = new Thread(HiloBuscador(files[i]));
+                hilo[i] = new Thread(HiloBuscador);
+                hilo[i].Start(files[i]);
             }
+
+            //for (int i = 0; i < hilo.Length; i++)
+            //{
+            //    hilo[i].Join();
+            //}
         }
 
-        private void HiloBuscador(File file) // Los hilos que buscan la palabra
+        private void HiloBuscador(Object file) // Los hilos que buscan la palabra en cada fichero añadido a la List
         {
+            FileInfo archivo = (FileInfo)file;
+            StreamReader reader;
+            buscador = new Buscador(addToTextBox); // Se le pasa al delegado la función que añade al textbox el número de veces que sale la cadena en cada archivo
+            string linea = "";
+            int contador = 0;
+
             while (!terminado)
             {
                 lock (l)
                 {
                     if (!terminado)
                     {
+                        using (reader = new StreamReader(archivo.FullName))
+                        {
+                            while ((linea = reader.ReadLine()) != null)
+                            {
+                                if (linea.Contains(palabra))
+                                {
+                                    contador++;
+                                }
 
+                                if (linea == null)
+                                {
+                                    terminado = true;
+                                }
+                            }
+
+                            this.Invoke(buscador, contador, txtMultiline);
+                        }
                     }
                 }
             }
+        }
+
+        private void addToTextBox(int contador, TextBox textbox)
+        {
+            txtMultiline.AppendText(contador + "\n");
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)

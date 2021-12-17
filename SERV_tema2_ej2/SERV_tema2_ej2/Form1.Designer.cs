@@ -37,6 +37,7 @@ namespace SERV_tema2_ej2
             this.txtMultiline = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblInfo = new System.Windows.Forms.Label();
+            this.lblPalabra = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,11 +98,19 @@ namespace SERV_tema2_ej2
             // lblInfo
             // 
             this.lblInfo.AutoSize = true;
-            this.lblInfo.Location = new System.Drawing.Point(9, 7);
+            this.lblInfo.Location = new System.Drawing.Point(159, 46);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(35, 13);
+            this.lblInfo.Size = new System.Drawing.Size(0, 13);
             this.lblInfo.TabIndex = 6;
-            this.lblInfo.Text = "label1";
+            // 
+            // lblPalabra
+            // 
+            this.lblPalabra.AutoSize = true;
+            this.lblPalabra.Location = new System.Drawing.Point(12, 55);
+            this.lblPalabra.Name = "lblPalabra";
+            this.lblPalabra.Size = new System.Drawing.Size(80, 13);
+            this.lblPalabra.TabIndex = 7;
+            this.lblPalabra.Text = "Word to search";
             // 
             // Form1
             // 
@@ -109,6 +118,7 @@ namespace SERV_tema2_ej2
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(645, 450);
+            this.Controls.Add(this.lblPalabra);
             this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtMultiline);
@@ -135,6 +145,7 @@ namespace SERV_tema2_ej2
         private System.Windows.Forms.TextBox txtMultiline;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblInfo;
+        private System.Windows.Forms.Label lblPalabra;
     }
 }
 
