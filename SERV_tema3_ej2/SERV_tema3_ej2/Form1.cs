@@ -17,10 +17,9 @@ namespace SERV_tema3_ej2
     {
         string ip;
         int port;
-        bool connected = false; // Mientras sea true, los botones están activos
-        bool btnClick = false; // Mientras sea true, la conexión permanece activa
+        bool addOrList = false; // Determina lo que hace WriteMessage() al pulsar uno de los botones
+        Socket socket;
         IPEndPoint ipEndPoint;
-        Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
 
         public Form1()
@@ -34,73 +33,77 @@ namespace SERV_tema3_ej2
             {
                 ip = txtIP.Text;
                 port = int.Parse(txtPort.Text);
-                ipEndPoint = new IPEndPoint(IPAddress.Parse(ip), 45);
+                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                ipEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
 
                 socket.Connect(ipEndPoint);
-                connected = true;
-                lbl_Info.Text = "User connected!";
+
             }
             catch (SocketException e)
             {
                 MessageBox.Show($"Error connection: {e.Message}\n Error code: {(SocketError)e.ErrorCode}({e.ErrorCode})", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
             }
-            catch (FormatException e)
-            {
-                MessageBox.Show("Not valid IP!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            Connection();
-
-            if (connected)
-            {
-                btnAdd.Visible = true;
-                btnList.Visible = true;
-            }
-
-            while (!btnClick)
+            catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException || ex is OverflowException)
             {
 
             }
-
-            lbl_Info.Text = "(!) User disconnected";
-            btnAdd.Visible = false;
-            btnList.Visible = false;
-            connected = false;
-            socket.Close();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            Connection();
+
             string msg = "add";
+            addOrList = true;
             WriteMessage(msg);
-            btnClick = true;
         }
 
         private void btnList_Click(object sender, EventArgs e)
         {
+            Connection();
+
             string msg = "list";
+            addOrList = false;
             WriteMessage(msg);
-            btnClick = true;
         }
 
         private void WriteMessage(string msg)
         {
             string msgServer;
 
-            using (NetworkStream netStream = new NetworkStream(socket))
-            using (StreamReader reader = new StreamReader(netStream))
-            using (StreamWriter writer = new StreamWriter(netStream))
+            try
             {
-                writer.WriteLine($"User {txtUser.Text}");
+                using (NetworkStream netStream = new NetworkStream(socket))
+                using (StreamReader reader = new StreamReader(netStream))
+                using (StreamWriter writer = new StreamWriter(netStream))
+                {
+                    writer.WriteLine($"User {txtUser.Text}");
+                    writer.Flush();
 
-                msgServer = reader.ReadLine();
+                    msgServer = reader.ReadLine();
+                    writer.WriteLine(msg);
+                    writer.Flush();
 
-                writer.WriteLine(msg);
-                writer.Flush();
+                    if (addOrList)
+                    {
+                        writer.WriteLine(msg);
+                        writer.Flush();
+                    }
+
+                    else
+                    {
+                        while (reader.ReadLine() != null)
+                        {
+                            txtList.Text += reader.ReadLine();
+                            txtList.Text += Environment.NewLine;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (ex is IOException || ex is ArgumentNullException)
+            {
+                MessageBox.Show("Not valid parameters!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
     }
