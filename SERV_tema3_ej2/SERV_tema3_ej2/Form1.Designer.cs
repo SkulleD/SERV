@@ -71,7 +71,7 @@ namespace SERV_tema3_ej2
             this.lbl_IP.Location = new System.Drawing.Point(17, 13);
             this.lbl_IP.Name = "lbl_IP";
             this.lbl_IP.Size = new System.Drawing.Size(17, 13);
-            this.lbl_IP.TabIndex = 3;
+            this.lbl_IP.TabIndex = 6;
             this.lbl_IP.Text = "IP";
             // 
             // lblPort
@@ -80,7 +80,7 @@ namespace SERV_tema3_ej2
             this.lblPort.Location = new System.Drawing.Point(142, 13);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(26, 13);
-            this.lblPort.TabIndex = 4;
+            this.lblPort.TabIndex = 7;
             this.lblPort.Text = "Port";
             // 
             // lblUser
@@ -89,7 +89,7 @@ namespace SERV_tema3_ej2
             this.lblUser.Location = new System.Drawing.Point(17, 74);
             this.lblUser.Name = "lblUser";
             this.lblUser.Size = new System.Drawing.Size(29, 13);
-            this.lblUser.TabIndex = 5;
+            this.lblUser.TabIndex = 8;
             this.lblUser.Text = "User";
             // 
             // btnAdd
@@ -97,20 +97,20 @@ namespace SERV_tema3_ej2
             this.btnAdd.Location = new System.Drawing.Point(145, 74);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 6;
+            this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "ADD";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.btn_Click);
             // 
             // btnList
             // 
             this.btnList.Location = new System.Drawing.Point(145, 103);
             this.btnList.Name = "btnList";
             this.btnList.Size = new System.Drawing.Size(75, 23);
-            this.btnList.TabIndex = 7;
+            this.btnList.TabIndex = 4;
             this.btnList.Text = "LIST";
             this.btnList.UseVisualStyleBackColor = true;
-            this.btnList.Click += new System.EventHandler(this.btnList_Click);
+            this.btnList.Click += new System.EventHandler(this.btn_Click);
             // 
             // txtList
             // 
@@ -120,8 +120,9 @@ namespace SERV_tema3_ej2
             this.txtList.Multiline = true;
             this.txtList.Name = "txtList";
             this.txtList.ReadOnly = true;
+            this.txtList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtList.Size = new System.Drawing.Size(327, 160);
-            this.txtList.TabIndex = 9;
+            this.txtList.TabIndex = 5;
             // 
             // Form1
             // 

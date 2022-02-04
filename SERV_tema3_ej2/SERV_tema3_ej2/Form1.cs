@@ -49,21 +49,10 @@ namespace SERV_tema3_ej2
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btn_Click(object sender, EventArgs e)
         {
             Connection();
-
-            string msg = "add";
-            addOrList = true;
-            WriteMessage(msg);
-        }
-
-        private void btnList_Click(object sender, EventArgs e)
-        {
-            Connection();
-
-            string msg = "list";
-            addOrList = false;
+            string msg = ((Button)sender).Text.ToLower();
             WriteMessage(msg);
         }
 
@@ -81,17 +70,17 @@ namespace SERV_tema3_ej2
                     writer.Flush();
 
                     msgServer = reader.ReadLine();
-                    writer.WriteLine(msg);
-                    writer.Flush();
 
-                    if (addOrList)
+                    if (msg.Contains("add"))
                     {
                         writer.WriteLine(msg);
                         writer.Flush();
                     }
-
                     else
                     {
+                        writer.WriteLine(msg);
+                        writer.Flush();
+
                         while (reader.ReadLine() != null)
                         {
                             txtList.Text += reader.ReadLine();
