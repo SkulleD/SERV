@@ -1,0 +1,11 @@
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\bin\Debug\Tema3_ej1_Cliente.exe.config
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\bin\Debug\Tema3_ej1_Cliente.exe
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\bin\Debug\Tema3_ej1_Cliente.pdb
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.csproj.AssemblyReference.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.Form1.resources
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.Form2.resources
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.Properties.Resources.resources
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.csproj.GenerateResource.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.csproj.CoreCompileInputs.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.exe
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej1\Tema3_ej1_Cliente\obj\Debug\Tema3_ej1_Cliente.pdb

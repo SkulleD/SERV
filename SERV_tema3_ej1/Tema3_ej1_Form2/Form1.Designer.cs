@@ -1,5 +1,5 @@
 ﻿
-namespace Tema3_ej1_Cliente
+namespace Tema3_ej1_Form2
 {
     partial class Form1
     {
@@ -29,85 +29,67 @@ namespace Tema3_ej1_Cliente
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.btnAcceder = new System.Windows.Forms.Button();
             this.lblPuerto = new System.Windows.Forms.Label();
             this.label_IP = new System.Windows.Forms.Label();
-            this.txtPuerto = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // btnAcceder
-            // 
-            this.btnAcceder.Location = new System.Drawing.Point(22, 124);
-            this.btnAcceder.Name = "btnAcceder";
-            this.btnAcceder.Size = new System.Drawing.Size(75, 23);
-            this.btnAcceder.TabIndex = 17;
-            this.btnAcceder.Text = "ACCEDER";
-            this.btnAcceder.UseVisualStyleBackColor = true;
-            this.btnAcceder.Click += new System.EventHandler(this.btnAcceder_Click);
             // 
             // lblPuerto
             // 
             this.lblPuerto.AutoSize = true;
-            this.lblPuerto.Location = new System.Drawing.Point(9, 60);
+            this.lblPuerto.Location = new System.Drawing.Point(9, 65);
             this.lblPuerto.Name = "lblPuerto";
             this.lblPuerto.Size = new System.Drawing.Size(38, 13);
-            this.lblPuerto.TabIndex = 16;
+            this.lblPuerto.TabIndex = 11;
             this.lblPuerto.Text = "Puerto";
             // 
             // label_IP
             // 
             this.label_IP.AutoSize = true;
-            this.label_IP.Location = new System.Drawing.Point(9, 7);
+            this.label_IP.Location = new System.Drawing.Point(9, 12);
             this.label_IP.Name = "label_IP";
             this.label_IP.Size = new System.Drawing.Size(17, 13);
-            this.label_IP.TabIndex = 15;
+            this.label_IP.TabIndex = 10;
             this.label_IP.Text = "IP";
             // 
-            // txtPuerto
+            // textBox2
             // 
-            this.txtPuerto.Location = new System.Drawing.Point(12, 84);
-            this.txtPuerto.Name = "txtPuerto";
-            this.txtPuerto.Size = new System.Drawing.Size(100, 20);
-            this.txtPuerto.TabIndex = 14;
-            this.txtPuerto.Text = "11037";
+            this.textBox2.Location = new System.Drawing.Point(12, 89);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 9;
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(12, 26);
+            this.txtIP.Location = new System.Drawing.Point(12, 31);
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(100, 20);
-            this.txtIP.TabIndex = 13;
-            this.txtIP.Text = "192.168.22.32";
+            this.txtIP.TabIndex = 8;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(122, 155);
+            this.ClientSize = new System.Drawing.Size(124, 166);
             this.ControlBox = false;
-            this.Controls.Add(this.btnAcceder);
             this.Controls.Add(this.lblPuerto);
             this.Controls.Add(this.label_IP);
-            this.Controls.Add(this.txtPuerto);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.txtIP);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Acceso";
+            this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnAcceder;
+
         private System.Windows.Forms.Label lblPuerto;
         private System.Windows.Forms.Label label_IP;
-        public System.Windows.Forms.TextBox txtPuerto;
-        public System.Windows.Forms.TextBox txtIP;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtIP;
     }
 }
 
