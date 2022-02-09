@@ -12,34 +12,35 @@ namespace SERV_tema3_ej1
     class Program
     {
         static IPEndPoint endPoint;
+        static bool running = true;
 
         static void Main(string[] args)
         {
-            endPoint = new IPEndPoint(IPAddress.Any, 11037);
-
-            using (Socket socket = new Socket(AddressFamily.InterNetwork,
-                SocketType.Stream, ProtocolType.Tcp))
+            while (running)
             {
-                socket.Bind(endPoint);
-                socket.Listen(10);
-                Console.WriteLine($"Server listening. Port: {endPoint.Port}");
-                Socket socketClient = socket.Accept();
-                IPEndPoint endPointClient = (IPEndPoint)socketClient.RemoteEndPoint;
-                Console.WriteLine("Client {0} connected at port {1}", endPointClient.Address, endPointClient.Port);
+                endPoint = new IPEndPoint(IPAddress.Any, 11037);
 
-                using (NetworkStream stream = new NetworkStream(socketClient))
-                using (StreamReader reader = new StreamReader(stream))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using (Socket socket = new Socket(AddressFamily.InterNetwork,
+                    SocketType.Stream, ProtocolType.Tcp))
                 {
-                    string bienvenida = "You are now in Alvaro's amazing Time and Date information server!";
+                    socket.Bind(endPoint);
+                    socket.Listen(10);
+                    Console.WriteLine($"Server listening. Port: {endPoint.Port}");
+                    Socket socketClient = socket.Accept();
+                    IPEndPoint endPointClient = (IPEndPoint)socketClient.RemoteEndPoint;
+                    Console.WriteLine("Client {0} connected at port {1}", endPointClient.Address, endPointClient.Port);
 
-                    writer.WriteLine(bienvenida);
-                    writer.Flush();
-
-                    string msg = "";
-
-                    while (msg != null)
+                    using (NetworkStream stream = new NetworkStream(socketClient))
+                    using (StreamReader reader = new StreamReader(stream))
+                    using (StreamWriter writer = new StreamWriter(stream))
                     {
+                        string bienvenida = "You are now in Alvaro's amazing Time and Date information server!";
+
+                        writer.WriteLine(bienvenida);
+                        writer.Flush();
+
+                        string msg = "";
+
                         try
                         {
                             msg = reader.ReadLine();
@@ -59,15 +60,16 @@ namespace SERV_tema3_ej1
                                         SendMessage();
                                         break;
                                     case "TODO":
-
+                                        msg = DateTime.Now.ToString();
                                         SendMessage();
                                         break;
                                     case "APAGAR":
-
-                                        SendMessage();
+                                        Console.WriteLine("Server closed");
+                                        running = false;
+                                        socket.Close();
                                         break;
                                     default:
-                                        msg = "Unkown command";
+                                        msg = "Unknown command";
                                         SendMessage();
                                         break;
                                 }
@@ -77,22 +79,19 @@ namespace SERV_tema3_ej1
                         {
                             msg = null;
                         }
-                    }
 
-                    Console.WriteLine("Client disconnected.\nConnection closed");
+                        void SendMessage()
+                        {
+                            Console.WriteLine(msg);
+                            writer.WriteLine(msg);
+                            writer.Flush();
+                        }
 
-                    void SendMessage()
-                    {
-                        Console.WriteLine(msg);
-                        writer.WriteLine(msg);
-                        writer.Flush();
+                        Console.WriteLine("Client disconnected");
+                        socketClient.Close();
                     }
                 }
-
-                socketClient.Close();
             }
-
-            Console.ReadLine();
         }
     }
 }

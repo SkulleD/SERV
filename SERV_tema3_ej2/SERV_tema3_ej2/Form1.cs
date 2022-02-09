@@ -71,22 +71,16 @@ namespace SERV_tema3_ej2
 
                     msgServer = reader.ReadLine();
 
-                    if (msg.Contains("add"))
-                    {
-                        writer.WriteLine(msg);
-                        writer.Flush();
-                    }
-                    else
-                    {
-                        writer.WriteLine(msg);
-                        writer.Flush();
+                    writer.WriteLine(msg);
+                    writer.Flush();
 
-                        while (reader.ReadLine() != null)
-                        {
-                            txtList.Text += reader.ReadLine();
-                            txtList.Text += Environment.NewLine;
-                        }
+                    while (reader.ReadLine() != null)
+                    {
+                        txtList.Text += reader.ReadLine();
+                        txtList.Text += Environment.NewLine;
                     }
+
+                    socket.Close();
                 }
             }
             catch (Exception ex) when (ex is IOException || ex is ArgumentNullException)

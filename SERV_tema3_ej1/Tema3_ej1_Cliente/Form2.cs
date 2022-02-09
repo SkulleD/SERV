@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -18,13 +19,13 @@ namespace Tema3_ej1_Cliente
         public int port;
         Socket socket;
         IPEndPoint endPoint;
-        string msg;
 
         public Form2(string ip, int port)
         {
             InitializeComponent();
             this.ip = ip;
             this.port = port;
+            lblResult.Text = "Awaiting command...";
         }
 
         public void Connection()
@@ -43,14 +44,43 @@ namespace Tema3_ej1_Cliente
             }
             catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException || ex is OverflowException)
             {
-
+                MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
 
         private void btn_Click(object sender, EventArgs e)
         {
             Connection();
-            string msg = ((Button)sender).Text.ToLower();
+            string msg = ((Button)sender).Text.ToUpper();
+            SendCommand(msg);
+        }
+
+        private void SendCommand(string msg)
+        {
+            try
+            {
+                using (NetworkStream stream = new NetworkStream(socket))
+                using (StreamReader reader = new StreamReader(stream))
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    reader.ReadLine();
+
+                    writer.WriteLine(msg);
+                    writer.Flush();
+
+                    lblResult.Text = reader.ReadLine(); // Sale el resultado del comando en la label
+                    socket.Close();
+
+                    if (msg.Contains("APAGAR"))
+                    {
+                        this.Close();
+                    }
+                }
+            } catch (Exception ex) when (ex is IOException || ex is ArgumentNullException)
+            {
+
+            }
         }
     }
 }
