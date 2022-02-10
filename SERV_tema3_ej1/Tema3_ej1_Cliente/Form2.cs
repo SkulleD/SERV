@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -15,72 +14,26 @@ namespace Tema3_ej1_Cliente
 {
     public partial class Form2 : Form
     {
-        public string ip;
-        public int port;
-        Socket socket;
-        IPEndPoint endPoint;
-
-        public Form2(string ip, int port)
+        public Form2()
         {
             InitializeComponent();
-            this.ip = ip;
-            this.port = port;
-            lblResult.Text = "Awaiting command...";
         }
 
-        public void Connection()
+        private void btnAcceder_Click(object sender, EventArgs e)
         {
             try
             {
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-                lblResult.Text = ip;
+                this.Close();
+            }
+            catch (FormatException)
+            {
 
-                socket.Connect(endPoint);
-            }
-            catch (SocketException e)
-            {
-                MessageBox.Show($"Error connection: {e.Message}\n Error code: {(SocketError)e.ErrorCode}({e.ErrorCode})", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException || ex is OverflowException)
-            {
-                MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
             }
         }
 
-        private void btn_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Connection();
-            string msg = ((Button)sender).Text.ToUpper();
-            SendCommand(msg);
-        }
-
-        private void SendCommand(string msg)
-        {
-            try
-            {
-                using (NetworkStream stream = new NetworkStream(socket))
-                using (StreamReader reader = new StreamReader(stream))
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    reader.ReadLine();
-
-                    writer.WriteLine(msg);
-                    writer.Flush();
-
-                    lblResult.Text = reader.ReadLine(); // Sale el resultado del comando en la label
-                    socket.Close();
-
-                    if (msg.Contains("APAGAR"))
-                    {
-                        this.Close();
-                    }
-                }
-            } catch (Exception ex) when (ex is IOException || ex is ArgumentNullException)
-            {
-
-            }
+            this.Close();
         }
     }
 }

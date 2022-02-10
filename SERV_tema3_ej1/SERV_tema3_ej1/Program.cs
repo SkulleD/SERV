@@ -18,12 +18,20 @@ namespace SERV_tema3_ej1
         {
             while (running)
             {
-                endPoint = new IPEndPoint(IPAddress.Any, 11037);
+                endPoint = new IPEndPoint(IPAddress.Any, 135);
 
                 using (Socket socket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp))
                 {
-                    socket.Bind(endPoint);
+                    try
+                    {
+                        socket.Bind(endPoint);
+                    } catch (SocketException e) when (e.ErrorCode == (int)SocketError.AddressAlreadyInUse)
+                    {
+                        endPoint = new IPEndPoint(IPAddress.Any, 242);
+                        socket.Bind(endPoint);
+                    }
+
                     socket.Listen(10);
                     Console.WriteLine($"Server listening. Port: {endPoint.Port}");
                     Socket socketClient = socket.Accept();

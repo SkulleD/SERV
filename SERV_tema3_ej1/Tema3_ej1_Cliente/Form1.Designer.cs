@@ -30,84 +30,102 @@ namespace Tema3_ej1_Cliente
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.btnAcceder = new System.Windows.Forms.Button();
-            this.lblPuerto = new System.Windows.Forms.Label();
-            this.label_IP = new System.Windows.Forms.Label();
-            this.txtPuerto = new System.Windows.Forms.TextBox();
-            this.txtIP = new System.Windows.Forms.TextBox();
+            this.btnSettings = new System.Windows.Forms.Button();
+            this.lblResult = new System.Windows.Forms.Label();
+            this.btnApagar = new System.Windows.Forms.Button();
+            this.btnTodo = new System.Windows.Forms.Button();
+            this.btnFecha = new System.Windows.Forms.Button();
+            this.btnHora = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnAcceder
+            // btnSettings
             // 
-            this.btnAcceder.Location = new System.Drawing.Point(22, 124);
-            this.btnAcceder.Name = "btnAcceder";
-            this.btnAcceder.Size = new System.Drawing.Size(75, 23);
-            this.btnAcceder.TabIndex = 17;
-            this.btnAcceder.Text = "ACCEDER";
-            this.btnAcceder.UseVisualStyleBackColor = true;
-            this.btnAcceder.Click += new System.EventHandler(this.btnAcceder_Click);
+            this.btnSettings.Location = new System.Drawing.Point(100, 68);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(75, 23);
+            this.btnSettings.TabIndex = 23;
+            this.btnSettings.Text = "CONFIG";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click_1);
             // 
-            // lblPuerto
+            // lblResult
             // 
-            this.lblPuerto.AutoSize = true;
-            this.lblPuerto.Location = new System.Drawing.Point(9, 60);
-            this.lblPuerto.Name = "lblPuerto";
-            this.lblPuerto.Size = new System.Drawing.Size(38, 13);
-            this.lblPuerto.TabIndex = 16;
-            this.lblPuerto.Text = "Puerto";
+            this.lblResult.AutoSize = true;
+            this.lblResult.Location = new System.Drawing.Point(5, 103);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(37, 13);
+            this.lblResult.TabIndex = 22;
+            this.lblResult.Text = "Result";
             // 
-            // label_IP
+            // btnApagar
             // 
-            this.label_IP.AutoSize = true;
-            this.label_IP.Location = new System.Drawing.Point(9, 7);
-            this.label_IP.Name = "label_IP";
-            this.label_IP.Size = new System.Drawing.Size(17, 13);
-            this.label_IP.TabIndex = 15;
-            this.label_IP.Text = "IP";
+            this.btnApagar.ForeColor = System.Drawing.Color.Red;
+            this.btnApagar.Location = new System.Drawing.Point(100, 39);
+            this.btnApagar.Name = "btnApagar";
+            this.btnApagar.Size = new System.Drawing.Size(75, 23);
+            this.btnApagar.TabIndex = 21;
+            this.btnApagar.Text = "APAGAR";
+            this.btnApagar.UseVisualStyleBackColor = true;
+            this.btnApagar.Click += new System.EventHandler(this.btn_Click);
             // 
-            // txtPuerto
+            // btnTodo
             // 
-            this.txtPuerto.Location = new System.Drawing.Point(12, 84);
-            this.txtPuerto.Name = "txtPuerto";
-            this.txtPuerto.Size = new System.Drawing.Size(100, 20);
-            this.txtPuerto.TabIndex = 14;
-            this.txtPuerto.Text = "11037";
+            this.btnTodo.Location = new System.Drawing.Point(8, 39);
+            this.btnTodo.Name = "btnTodo";
+            this.btnTodo.Size = new System.Drawing.Size(75, 23);
+            this.btnTodo.TabIndex = 20;
+            this.btnTodo.Text = "TODO";
+            this.btnTodo.UseVisualStyleBackColor = true;
+            this.btnTodo.Click += new System.EventHandler(this.btn_Click);
             // 
-            // txtIP
+            // btnFecha
             // 
-            this.txtIP.Location = new System.Drawing.Point(12, 26);
-            this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(100, 20);
-            this.txtIP.TabIndex = 13;
-            this.txtIP.Text = "192.168.22.32";
+            this.btnFecha.Location = new System.Drawing.Point(100, 10);
+            this.btnFecha.Name = "btnFecha";
+            this.btnFecha.Size = new System.Drawing.Size(75, 23);
+            this.btnFecha.TabIndex = 19;
+            this.btnFecha.Text = "FECHA";
+            this.btnFecha.UseVisualStyleBackColor = true;
+            this.btnFecha.Click += new System.EventHandler(this.btn_Click);
+            // 
+            // btnHora
+            // 
+            this.btnHora.Location = new System.Drawing.Point(8, 10);
+            this.btnHora.Name = "btnHora";
+            this.btnHora.Size = new System.Drawing.Size(75, 23);
+            this.btnHora.TabIndex = 18;
+            this.btnHora.Text = "HORA";
+            this.btnHora.UseVisualStyleBackColor = true;
+            this.btnHora.Click += new System.EventHandler(this.btn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(122, 155);
-            this.ControlBox = false;
-            this.Controls.Add(this.btnAcceder);
-            this.Controls.Add(this.lblPuerto);
-            this.Controls.Add(this.label_IP);
-            this.Controls.Add(this.txtPuerto);
-            this.Controls.Add(this.txtIP);
+            this.ClientSize = new System.Drawing.Size(188, 129);
+            this.Controls.Add(this.btnSettings);
+            this.Controls.Add(this.lblResult);
+            this.Controls.Add(this.btnApagar);
+            this.Controls.Add(this.btnTodo);
+            this.Controls.Add(this.btnFecha);
+            this.Controls.Add(this.btnHora);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Acceso";
+            this.Text = "Cliente ej1";
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnAcceder;
-        private System.Windows.Forms.Label lblPuerto;
-        private System.Windows.Forms.Label label_IP;
-        public System.Windows.Forms.TextBox txtPuerto;
-        public System.Windows.Forms.TextBox txtIP;
+        private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.Button btnApagar;
+        private System.Windows.Forms.Button btnTodo;
+        private System.Windows.Forms.Button btnFecha;
+        private System.Windows.Forms.Button btnHora;
     }
 }
 
