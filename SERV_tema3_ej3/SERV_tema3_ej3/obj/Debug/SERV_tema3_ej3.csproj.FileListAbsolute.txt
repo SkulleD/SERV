@@ -1,0 +1,7 @@
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\bin\Debug\SERV_tema3_ej3.exe.config
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\bin\Debug\SERV_tema3_ej3.exe
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\bin\Debug\SERV_tema3_ej3.pdb
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\obj\Debug\SERV_tema3_ej3.csproj.AssemblyReference.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\obj\Debug\SERV_tema3_ej3.csproj.CoreCompileInputs.cache
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\obj\Debug\SERV_tema3_ej3.exe
+C:\Users\AlvaroVila\source\repos\SERV_tema3_ej3\SERV_tema3_ej3\obj\Debug\SERV_tema3_ej3.pdb

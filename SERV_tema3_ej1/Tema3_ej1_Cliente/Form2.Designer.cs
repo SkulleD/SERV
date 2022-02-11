@@ -40,6 +40,7 @@ namespace Tema3_ej1_Cliente
             // 
             // btnAcceder
             // 
+            this.btnAcceder.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnAcceder.Location = new System.Drawing.Point(3, 126);
             this.btnAcceder.Name = "btnAcceder";
             this.btnAcceder.Size = new System.Drawing.Size(78, 23);
@@ -90,10 +91,11 @@ namespace Tema3_ej1_Cliente
             this.btnCancelar.TabIndex = 23;
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.Click += new System.EventHandler(this.btnAcceder_Click);
             // 
             // Form2
             // 
+            this.AcceptButton = this.btnAcceder;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(171, 170);

@@ -19,19 +19,7 @@ namespace Tema3_ej1_Cliente
             InitializeComponent();
         }
 
-        private void btnAcceder_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.Close();
-            }
-            catch (FormatException)
-            {
-
-            }
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private void btnAcceder_Click(object sender, EventArgs e) // Sirve para ambos botones
         {
             this.Close();
         }

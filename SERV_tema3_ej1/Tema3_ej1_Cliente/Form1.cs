@@ -82,8 +82,14 @@ namespace Tema3_ej1_Cliente
 
             if (res == DialogResult.OK)
             {
-                ip = form2.txtIP.Text;
-                port = int.Parse(form2.Text.ToString());
+                try
+                {
+                    ip = form2.txtIP.Text;
+                    port = int.Parse(form2.txtPuerto.Text);
+                } catch (Exception ex) when (ex is FormatException || ex is OverflowException)
+                {
+
+                }
             }
         }
     }

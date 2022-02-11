@@ -26,77 +26,92 @@ namespace SERV_tema3_ej1
                     try
                     {
                         socket.Bind(endPoint);
-                    } catch (SocketException e) when (e.ErrorCode == (int)SocketError.AddressAlreadyInUse)
-                    {
-                        endPoint = new IPEndPoint(IPAddress.Any, 242);
-                        socket.Bind(endPoint);
                     }
-
-                    socket.Listen(10);
-                    Console.WriteLine($"Server listening. Port: {endPoint.Port}");
-                    Socket socketClient = socket.Accept();
-                    IPEndPoint endPointClient = (IPEndPoint)socketClient.RemoteEndPoint;
-                    Console.WriteLine("Client {0} connected at port {1}", endPointClient.Address, endPointClient.Port);
-
-                    using (NetworkStream stream = new NetworkStream(socketClient))
-                    using (StreamReader reader = new StreamReader(stream))
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    catch (SocketException e) when (e.ErrorCode == (int)SocketError.AddressAlreadyInUse)
                     {
-                        string bienvenida = "You are now in Alvaro's amazing Time and Date information server!";
-
-                        writer.WriteLine(bienvenida);
-                        writer.Flush();
-
-                        string msg = "";
-
                         try
                         {
-                            msg = reader.ReadLine();
+                            endPoint = new IPEndPoint(IPAddress.Any, 135);
+                            socket.Bind(endPoint);
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Puertos ocupados. Conexión no posible.");
+                            Console.ReadLine();
+                            running = false;
+                        }
+                    }
 
-                            if (msg != null)
+                    try
+                    {
+                        socket.Listen(10);
+                        Console.WriteLine($"Server listening. Port: {endPoint.Port}");
+                        Socket socketClient = socket.Accept();
+                        IPEndPoint endPointClient = (IPEndPoint)socketClient.RemoteEndPoint;
+                        Console.WriteLine("Client {0} connected at port {1}", endPointClient.Address, endPointClient.Port);
+
+                        using (NetworkStream stream = new NetworkStream(socketClient))
+                        using (StreamReader reader = new StreamReader(stream))
+                        using (StreamWriter writer = new StreamWriter(stream))
+                        {
+                            string bienvenida = "You are now in Alvaro's amazing Time and Date information server!";
+
+                            writer.WriteLine(bienvenida);
+                            writer.Flush();
+
+                            string msg = "";
+
+                            try
                             {
-                                msg = msg.ToUpper();
+                                msg = reader.ReadLine();
 
-                                switch (msg)
+                                if (msg != null)
                                 {
-                                    case "HORA":
-                                        msg = DateTime.Now.ToString("HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
-                                        SendMessage();
-                                        break;
-                                    case "FECHA":
-                                        msg = DateTime.Now.ToString("dddd, dd MMMM yyyy");
-                                        SendMessage();
-                                        break;
-                                    case "TODO":
-                                        msg = DateTime.Now.ToString();
-                                        SendMessage();
-                                        break;
-                                    case "APAGAR":
-                                        Console.WriteLine("Server closed");
-                                        running = false;
-                                        socket.Close();
-                                        break;
-                                    default:
-                                        msg = "Unknown command";
-                                        SendMessage();
-                                        break;
+                                    msg = msg.ToUpper();
+
+                                    switch (msg)
+                                    {
+                                        case "HORA":
+                                            msg = DateTime.Now.ToString("HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+                                            SendMessage();
+                                            break;
+                                        case "FECHA":
+                                            msg = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+                                            SendMessage();
+                                            break;
+                                        case "TODO":
+                                            msg = DateTime.Now.ToString();
+                                            SendMessage();
+                                            break;
+                                        case "APAGAR":
+                                            Console.WriteLine("Server closed");
+                                            running = false;
+                                            break;
+                                        default:
+                                            msg = "Unknown command";
+                                            SendMessage();
+                                            break;
+                                    }
                                 }
                             }
-                        }
-                        catch (IOException e)
-                        {
-                            msg = null;
-                        }
+                            catch (IOException e)
+                            {
+                                msg = null;
+                            }
 
-                        void SendMessage()
-                        {
-                            Console.WriteLine(msg);
-                            writer.WriteLine(msg);
-                            writer.Flush();
-                        }
+                            void SendMessage()
+                            {
+                                Console.WriteLine(msg);
+                                writer.WriteLine(msg);
+                                writer.Flush();
+                            }
 
-                        Console.WriteLine("Client disconnected");
-                        socketClient.Close();
+                            Console.WriteLine("Client disconnected");
+                            socketClient.Close();
+                        }
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
             }
