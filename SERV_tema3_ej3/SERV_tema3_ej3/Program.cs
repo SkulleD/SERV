@@ -17,19 +17,47 @@ namespace SERV_tema3_ej3
         static string ip;
         static int port;
         static bool running = true;
+        static List<string> reido;
 
         static void Hilo(object socket)
         {
             string msg = "";
             Socket socketCliente = (Socket)socket;
+            IPEndPoint endpointCliente = (IPEndPoint)socketCliente.RemoteEndPoint;
+          //  socketList.Add(socketCliente);
             Console.WriteLine("Se ha conectado {0} en puerto {1}", endpoint.Address, endpoint.Port);
             
             using (NetworkStream stream = new NetworkStream(socketCliente))
             using (StreamReader reader = new StreamReader(stream))
             using (StreamWriter writer = new StreamWriter(stream))
             {
+                msg = "Funciono";
+                writer.WriteLine(msg);
+                writer.Flush();
 
+                while (running)
+                {
+                    try
+                    {
+                        msg = reader.ReadLine();
+                        writer.Flush();
+
+                        if (msg != null)
+                        {
+                            Console.WriteLine($"{endpoint.Address} dice: \"{msg}\"");
+                            reido.Add(reader.ReadLine());
+                            
+                        }
+
+                    } catch (IOException)
+                    {
+                        break;
+                    }
+                }
+                Console.WriteLine($"Cerrada conexión con {endpoint.Address}:{endpointCliente.Port}");
             }
+           // socketList.Remove(socketCliente);
+            socketCliente.Close();
         }
 
         static void Main(string[] args)
@@ -58,6 +86,13 @@ namespace SERV_tema3_ej3
                         Socket socketCliente = socket.Accept();
                         Thread hilo = new Thread(Hilo);
                         hilo.Start(socketCliente);
+                        if (reido.Count > 0)
+                        {
+                            foreach (string mensaje in reido)
+                            {
+                                Console.WriteLine(mensaje);
+                            }
+                        }
                     }
                 }
             }
