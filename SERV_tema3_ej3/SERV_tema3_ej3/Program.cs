@@ -12,19 +12,19 @@ namespace SERV_tema3_ej3
 {
     class Program
     {
+        static object l = new object();
         static IPEndPoint endpoint;
         static Socket socket;
         static string ip;
         static int port;
         static bool running = true;
-        static List<string> reido;
+        static List<StreamWriter> messageList = new List<StreamWriter>();
 
         static void Hilo(object socket)
         {
             string msg = "";
             Socket socketCliente = (Socket)socket;
             IPEndPoint endpointCliente = (IPEndPoint)socketCliente.RemoteEndPoint;
-          //  socketList.Add(socketCliente);
             Console.WriteLine("Se ha conectado {0} en puerto {1}", endpoint.Address, endpoint.Port);
             
             using (NetworkStream stream = new NetworkStream(socketCliente))
@@ -37,26 +37,35 @@ namespace SERV_tema3_ej3
 
                 while (running)
                 {
-                    try
+                    lock (l)
                     {
-                        msg = reader.ReadLine();
-                        writer.Flush();
-
-                        if (msg != null)
+                        try
                         {
-                            Console.WriteLine($"{endpoint.Address} dice: \"{msg}\"");
-                            reido.Add(reader.ReadLine());
-                            
-                        }
+                            msg = reader.ReadLine();
+                            writer.Flush();
 
-                    } catch (IOException)
-                    {
-                        break;
+                            if (msg != null)
+                            {
+                                messageList.Add(writer);
+
+                                foreach (StreamWriter writerMsg in messageList)
+                                {
+                                    writerMsg.WriteLine(msg);
+                                    writerMsg.Flush();
+                                }
+
+                                Console.WriteLine($"{endpoint.Address} dice: \"{msg}\"");
+                            }
+                        }
+                        catch (IOException)
+                        {
+                            break;
+                        }
                     }
                 }
                 Console.WriteLine($"Cerrada conexión con {endpoint.Address}:{endpointCliente.Port}");
             }
-           // socketList.Remove(socketCliente);
+
             socketCliente.Close();
         }
 
@@ -86,13 +95,6 @@ namespace SERV_tema3_ej3
                         Socket socketCliente = socket.Accept();
                         Thread hilo = new Thread(Hilo);
                         hilo.Start(socketCliente);
-                        if (reido.Count > 0)
-                        {
-                            foreach (string mensaje in reido)
-                            {
-                                Console.WriteLine(mensaje);
-                            }
-                        }
                     }
                 }
             }
