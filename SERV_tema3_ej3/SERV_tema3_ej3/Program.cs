@@ -10,32 +10,37 @@ using System.Threading.Tasks;
 
 namespace SERV_tema3_ej3
 { // PROBLEMAS:
-  // Al enviar un mensaje también aparece el enviado anteriormente
   // En cuanto un cliente se desconecta ya no es posible usar los demás clientes
     class Program
-    {
+    {   
         static object l = new object();
         static IPEndPoint endpoint;
         static bool running = true;
         static List<StreamWriter> messageList = new List<StreamWriter>();
-        static List<Socket> socketList = new List<Socket>();
+        static List<Cliente> clientList = new List<Cliente>();
 
         static void Hilo(object socket)
         {
+            Cliente cliente;
             string msg = "";
+            string username = "";
             Socket socketCliente = (Socket)socket;
             IPEndPoint endpointCliente = (IPEndPoint)socketCliente.RemoteEndPoint;
-            Console.WriteLine("Se ha conectado {0} en puerto {1}", endpointCliente.Address, endpointCliente.Port);
 
             using (NetworkStream stream = new NetworkStream(socketCliente))
             using (StreamReader reader = new StreamReader(stream))
             using (StreamWriter writer = new StreamWriter(stream))
             {
                 messageList.Add(writer);
-                socketList.Add(socketCliente);
 
-                msg = "Funcionando";
+                msg = "Escribe tu nombre de usuario";
                 writer.WriteLine(msg);
+                writer.Flush();
+                username = reader.ReadLine();
+
+                cliente = CreaClientes(username, endpointCliente, socketCliente);
+                clientList.Add(cliente);
+                writer.WriteLine("Se ha conectado {0} ({1})", cliente.Nombre, cliente.EndPoint);
                 writer.Flush();
 
                 while (running)
@@ -57,27 +62,27 @@ namespace SERV_tema3_ej3
                                             messageList.Remove(writerMsg);
                                         }
 
-                                        foreach (Socket socketC in socketList)
+                                        foreach (Cliente client in clientList)
                                         {
-                                            socketList.Remove(socketC);
+                                            clientList.Remove(client);
                                         }
                                         break;
                                     case "#lista":
-                                        foreach (Socket socketC in socketList)
+                                        foreach (Cliente client in clientList)
                                         {
-                                            msg = $"IP: {endpointCliente.Address} Puerto: {endpointCliente.Port}";
+                                            msg = $"Username: {client.Nombre} IP: {client.EndPoint.Address} Puerto: {client.EndPoint.Port}";
                                             writer.WriteLine(msg);
 
-                                            if (socketCliente.AddressFamily == socketC.AddressFamily) // Solo se muestran en el cliente que lo pone
+                                            if (socketCliente.AddressFamily == client.SocketC.AddressFamily) // Solo se muestran en el cliente que lo pone
                                             {
                                                 writer.Flush();
                                             }
                                         }
                                         break;
                                     default:
-                                        foreach (StreamWriter writerMsg in messageList)
+                                        foreach (StreamWriter writerMsg in messageList) // Si no es ni #salir ni #lista muestra el mensaje enviado
                                         {
-                                            writerMsg.WriteLine($"{endpointCliente.Address} {endpointCliente.Port} dice: \"{msg}\"");
+                                            writerMsg.WriteLine($"{cliente.Nombre}@{cliente.EndPoint.Address} dice: \"{msg}\"");
 
                                             if (writer != writerMsg) // Se muestra a todos excepto al propio que lo envía
                                             {
@@ -104,6 +109,11 @@ namespace SERV_tema3_ej3
             }
 
             socketCliente.Close();
+        }
+
+        static Cliente CreaClientes(string username, IPEndPoint endPoint, Socket socket)
+        {
+            return new Cliente(username, endPoint, socket);
         }
 
         static void Main(string[] args)

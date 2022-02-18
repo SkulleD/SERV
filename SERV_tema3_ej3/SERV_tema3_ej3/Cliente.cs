@@ -11,14 +11,22 @@ namespace SERV_tema3_ej3
     class Cliente
     {
         private string nombre = "";
+        public string Nombre { get; set; }
         private IPEndPoint endPoint;
-        private Socket socketCliente;
+        public IPEndPoint EndPoint { get; set; }
+        private Socket socketC;
+        public Socket SocketC { get; set; }
 
-        public Cliente(string nombre)
+        public Cliente()
         {
-            this.nombre = nombre;
+
         }
 
-        public string Nombre { get; set; }
+        public Cliente(string nombre, IPEndPoint endPoint, Socket socketC)
+        {
+            this.Nombre = nombre;
+            this.EndPoint = endPoint;
+            this.SocketC = socketC;
+        }
     }
 }
