@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -10,12 +11,10 @@ namespace SERV_tema3_ej3
 {
     class Cliente
     {
-        private string nombre = "";
         public string Nombre { get; set; }
-        private IPEndPoint endPoint;
         public IPEndPoint EndPoint { get; set; }
-        private Socket socketC;
         public Socket SocketC { get; set; }
+        public StreamWriter WriterMsg { get; set; }
 
         public Cliente()
         {
@@ -27,6 +26,7 @@ namespace SERV_tema3_ej3
             this.Nombre = nombre;
             this.EndPoint = endPoint;
             this.SocketC = socketC;
+            //this.WriterMsg = writerMsg;
         }
     }
 }
