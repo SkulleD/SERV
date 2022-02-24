@@ -21,12 +21,12 @@ namespace SERV_tema3_ej3
 
         }
 
-        public Cliente(string nombre, IPEndPoint endPoint, Socket socketC)
+        public Cliente(string nombre, IPEndPoint endPoint, Socket socketC, StreamWriter writerMsg)
         {
             this.Nombre = nombre;
             this.EndPoint = endPoint;
             this.SocketC = socketC;
-            //this.WriterMsg = writerMsg;
+            this.WriterMsg = writerMsg;
         }
     }
 }

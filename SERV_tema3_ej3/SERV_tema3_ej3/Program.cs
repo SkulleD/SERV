@@ -9,12 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace SERV_tema3_ej3
-{ // PROBLEMAS:
-  // En cuanto un cliente se desconecta ya no va
+{
     class Program
     {
         static object l = new object();
-        static List<StreamWriter> messageList = new List<StreamWriter>();
         static List<Cliente> clientList = new List<Cliente>();
 
         static void Hilo(object socket)
@@ -31,7 +29,7 @@ namespace SERV_tema3_ej3
             using (StreamReader reader = new StreamReader(stream))
             using (StreamWriter writer = new StreamWriter(stream))
             {
-                messageList.Add(writer);
+                //messageList.Add(writer);
 
                 msg = "Te damos la bienvenida";
                 writer.WriteLine(msg);
@@ -46,7 +44,7 @@ namespace SERV_tema3_ej3
 
                     foreach (Cliente clientName in clientList)
                     {
-                        if (clientName.Nombre.Equals(username))
+                        if (clientName.Nombre.Equals(username) && username != null && clientName.Nombre != null)
                         {
                             repetirUsername = true;
                         }
@@ -56,15 +54,15 @@ namespace SERV_tema3_ej3
                         }
                     }
 
-                } while (repetirUsername);
+                } while (repetirUsername && username != null);
 
-                cliente = CreaClientes(username, endpointCliente, socketCliente);
+                cliente = CreaClientes(username, endpointCliente, socketCliente, writer);
                 clientList.Add(cliente);
 
-                foreach (StreamWriter writerMsg in messageList)
+                foreach (Cliente client in clientList)
                 {
-                    writerMsg.WriteLine("Se ha conectado {0} ({1})", cliente.Nombre, cliente.EndPoint);
-                    writerMsg.Flush();
+                    client.WriterMsg.WriteLine("Se ha conectado {0} ({1})", cliente.Nombre, cliente.EndPoint);
+                    client.WriterMsg.Flush();
                 }
 
                 while (running)
@@ -72,7 +70,6 @@ namespace SERV_tema3_ej3
                     try
                     {
                         msg = reader.ReadLine();
-                        writer.Flush();
 
                         if (msg != null)
                         {
@@ -81,22 +78,7 @@ namespace SERV_tema3_ej3
                                 switch (msg)
                                 {
                                     case "#salir":
-                                        for (int i = clientList.Count - 1; i >= 0; i--)
-                                        {
-                                            if (endpointCliente.Port == clientList[i].EndPoint.Port)
-                                            {
-                                                foreach (StreamWriter writerMsg in messageList)
-                                                {
-                                                    msg = $"{endpointCliente.Address}:{endpointCliente.Port} se ha desconectado.";
-                                                    writerMsg.WriteLine(msg);
-                                                    writerMsg.Flush();
-                                                }
-
-                                                clientList.RemoveAt(i);
-                                            }
-                                        }
-
-                                        running = false;
+                                        salirCliente();
                                         break;
                                     case "#lista":
                                         foreach (Cliente client in clientList)
@@ -107,38 +89,56 @@ namespace SERV_tema3_ej3
                                         }
                                         break;
                                     default:
-                                        foreach (StreamWriter writerMsg in messageList) // Si no es ni #salir ni #lista muestra el mensaje enviado
+                                        foreach (Cliente client in clientList) // Si no es ni #salir ni #lista muestra el mensaje enviado
                                         {
-                                            if (writer != writerMsg) // Se muestra a todos excepto al propio que lo envía
+                                            if (writer != client.WriterMsg && !client.WriterMsg.Equals("")) // Se muestra a todos excepto al propio que lo envía
                                             {
-                                                writerMsg.WriteLine($"{cliente.Nombre}@{cliente.EndPoint.Address}:{cliente.EndPoint.Port} dice: \"{msg}\"");
-                                                writerMsg.Flush();
+                                                client.WriterMsg.WriteLine($"{cliente.Nombre}@{cliente.EndPoint.Address}:{cliente.EndPoint.Port} dice: \"{msg}\"");
+                                                client.WriterMsg.Flush();
                                             }
                                         }
+
                                         break;
                                 }
                             }
+                        } else
+                        {
+                            salirCliente();
                         }
                     }
-                    catch (IOException)
+                    catch (Exception ex) when (ex is IOException)
                     {
                         break;
                     }
                 }
             }
 
-            if (!running)
+            void salirCliente()
             {
-                Console.ReadLine();
+                for (int i = clientList.Count - 1; i >= 0; i--)
+                {
+                    if (endpointCliente.Port == clientList[i].EndPoint.Port)
+                    {
+                        foreach (Cliente client in clientList)
+                        {
+                            msg = $"{endpointCliente.Address}:{endpointCliente.Port} se ha desconectado.";
+                            client.WriterMsg.WriteLine(msg);
+                            client.WriterMsg.Flush();
+                        }
 
+                        clientList.RemoveAt(i);
+                    }
+                }
+
+                running = false;
             }
 
             socketCliente.Close();
         }
 
-        static Cliente CreaClientes(string username, IPEndPoint endPoint, Socket socket)
+        static Cliente CreaClientes(string username, IPEndPoint endPoint, Socket socket, StreamWriter writerMsg)
         {
-            return new Cliente(username, endPoint, socket);
+            return new Cliente(username, endPoint, socket, writerMsg);
         }
 
         static void Main(string[] args)
