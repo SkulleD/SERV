@@ -30,42 +30,21 @@ namespace SERV_tema3_ej3
             using (StreamReader reader = new StreamReader(stream))
             using (StreamWriter writer = new StreamWriter(stream))
             {
-                //messageList.Add(writer);
-
                 msg = "Te damos la bienvenida";
                 writer.WriteLine(msg);
                 writer.Flush();
 
-                do
+                try
                 {
-                    try
-                    {
-                        msg = "Escribe tu nombre de usuario (no puede ser repetido)";
-                        writer.WriteLine(msg);
-                        writer.Flush();
-                        username = reader.ReadLine();
-                    }
-                    catch (IOException)
-                    {
+                    msg = "Escribe tu nombre de usuario";
+                    writer.WriteLine(msg);
+                    writer.Flush();
+                    username = reader.ReadLine();
+                }
+                catch (IOException)
+                {
 
-                    }
-
-                    lock (l)
-                    {
-                        foreach (Cliente clientName in clientList)
-                        {
-                            if (username.Equals(clientName.Nombre) || username == null || clientName.Nombre == null)
-                            {
-                                repetirUsername = true;
-                            }
-                            else
-                            {
-                                repetirUsername = false;
-                            }
-                        }
-                    }
-
-                } while (repetirUsername || username == null);
+                }
 
                 cliente = CreaClientes(username, endpointCliente, socketCliente, writer);
 
@@ -143,7 +122,8 @@ namespace SERV_tema3_ej3
                                         break;
                                 }
                             }
-                        } else
+                        }
+                        else
                         {
                             running = false;
                         }
