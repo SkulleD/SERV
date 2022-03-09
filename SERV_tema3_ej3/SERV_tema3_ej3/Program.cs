@@ -25,6 +25,7 @@ namespace SERV_tema3_ej3
             Socket socketCliente = (Socket)socket;
             IPEndPoint endpointCliente = (IPEndPoint)socketCliente.RemoteEndPoint;
 
+
             using (NetworkStream stream = new NetworkStream(socketCliente))
             using (StreamReader reader = new StreamReader(stream))
             using (StreamWriter writer = new StreamWriter(stream))
@@ -37,16 +38,23 @@ namespace SERV_tema3_ej3
 
                 do
                 {
-                    msg = "Escribe tu nombre de usuario (no puede ser repetido)";
-                    writer.WriteLine(msg);
-                    writer.Flush();
-                    username = reader.ReadLine();
+                    try
+                    {
+                        msg = "Escribe tu nombre de usuario (no puede ser repetido)";
+                        writer.WriteLine(msg);
+                        writer.Flush();
+                        username = reader.ReadLine();
+                    }
+                    catch (IOException)
+                    {
+
+                    }
 
                     lock (l)
                     {
                         foreach (Cliente clientName in clientList)
                         {
-                            if (clientName.Nombre.Equals(username) && username != null && clientName.Nombre != null)
+                            if (username.Equals(clientName.Nombre) || username == null || clientName.Nombre == null)
                             {
                                 repetirUsername = true;
                             }
@@ -57,7 +65,7 @@ namespace SERV_tema3_ej3
                         }
                     }
 
-                } while (repetirUsername && username != null);
+                } while (repetirUsername || username == null);
 
                 cliente = CreaClientes(username, endpointCliente, socketCliente, writer);
 
@@ -67,7 +75,17 @@ namespace SERV_tema3_ej3
 
                     if (cliente.WriterMsg == null)
                     {
-                        salirCliente();
+                        foreach (Cliente client in clientList)
+                        {
+                            if (endpointCliente.Port != client.EndPoint.Port)
+                            {
+                                msg = $"{endpointCliente.Address}:{endpointCliente.Port} se ha desconectado.";
+                                client.WriterMsg.WriteLine(msg);
+                                client.WriterMsg.Flush();
+                            }
+                        }
+                        clientList.Remove(cliente);
+                        running = false;
                     }
 
                     if (cliente.Nombre != null)
@@ -93,7 +111,17 @@ namespace SERV_tema3_ej3
                                 switch (msg)
                                 {
                                     case "#salir":
-                                        salirCliente();
+                                        foreach (Cliente client in clientList)
+                                        {
+                                            if (endpointCliente.Port != client.EndPoint.Port)
+                                            {
+                                                msg = $"{endpointCliente.Address}:{endpointCliente.Port} se ha desconectado.";
+                                                client.WriterMsg.WriteLine(msg);
+                                                client.WriterMsg.Flush();
+                                            }
+                                        }
+                                        clientList.Remove(cliente);
+                                        running = false;
                                         break;
                                     case "#lista":
                                         foreach (Cliente client in clientList)
@@ -112,43 +140,22 @@ namespace SERV_tema3_ej3
                                                 client.WriterMsg.Flush();
                                             }
                                         }
-
                                         break;
                                 }
                             }
-                        }
-                        else
+                        } else
                         {
-                            salirCliente();
+                            running = false;
                         }
                     }
-                    catch (Exception ex) when (ex is IOException)
+                    catch (IOException)
                     {
                         break;
                     }
                 }
             }
 
-            void salirCliente()
-            {
-                for (int i = clientList.Count - 1; i >= 0; i--)
-                {
-                    if (endpointCliente.Port == clientList[i].EndPoint.Port)
-                    {
-                        foreach (Cliente client in clientList)
-                        {
-                            msg = $"{endpointCliente.Address}:{endpointCliente.Port} se ha desconectado.";
-                            client.WriterMsg.WriteLine(msg);
-                            client.WriterMsg.Flush();
-                        }
-
-                        clientList.RemoveAt(i);
-                    }
-                }
-
-                running = false;
-            }
-
+            clientList.Remove(cliente);
             socketCliente.Close();
         }
 
