@@ -42,27 +42,42 @@ namespace SERV_tema3_ej3
                     writer.Flush();
                     username = reader.ReadLine();
 
-                    foreach (Cliente clientName in clientList)
+                    lock (l)
                     {
-                        if (clientName.Nombre.Equals(username) && username != null && clientName.Nombre != null)
+                        foreach (Cliente clientName in clientList)
                         {
-                            repetirUsername = true;
-                        }
-                        else
-                        {
-                            repetirUsername = false;
+                            if (clientName.Nombre.Equals(username) && username != null && clientName.Nombre != null)
+                            {
+                                repetirUsername = true;
+                            }
+                            else
+                            {
+                                repetirUsername = false;
+                            }
                         }
                     }
 
                 } while (repetirUsername && username != null);
 
                 cliente = CreaClientes(username, endpointCliente, socketCliente, writer);
-                clientList.Add(cliente);
 
-                foreach (Cliente client in clientList)
+                lock (l)
                 {
-                    client.WriterMsg.WriteLine("Se ha conectado {0} ({1})", cliente.Nombre, cliente.EndPoint);
-                    client.WriterMsg.Flush();
+                    clientList.Add(cliente);
+
+                    if (cliente.WriterMsg == null)
+                    {
+                        salirCliente();
+                    }
+
+                    if (cliente.Nombre != null)
+                    {
+                        foreach (Cliente client in clientList)
+                        {
+                            client.WriterMsg.WriteLine("Se ha conectado {0} ({1})", cliente.Nombre, cliente.EndPoint);
+                            client.WriterMsg.Flush();
+                        }
+                    }
                 }
 
                 while (running)
@@ -101,7 +116,8 @@ namespace SERV_tema3_ej3
                                         break;
                                 }
                             }
-                        } else
+                        }
+                        else
                         {
                             salirCliente();
                         }
