@@ -1,0 +1,13 @@
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\bin\Debug\netcoreapp3.1\SERV_tema3_ej5.exe
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\bin\Debug\netcoreapp3.1\SERV_tema3_ej5.deps.json
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\bin\Debug\netcoreapp3.1\SERV_tema3_ej5.runtimeconfig.json
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\bin\Debug\netcoreapp3.1\SERV_tema3_ej5.runtimeconfig.dev.json
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\bin\Debug\netcoreapp3.1\SERV_tema3_ej5.dll
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\bin\Debug\netcoreapp3.1\SERV_tema3_ej5.pdb
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.csprojAssemblyReference.cache
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.AssemblyInfoInputs.cache
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.AssemblyInfo.cs
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.csproj.CoreCompileInputs.cache
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.dll
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.pdb
+C:\Users\Álvaro Vila\source\repos\2021_2022\Servicios\SERV_tema3_ej5\obj\Debug\netcoreapp3.1\SERV_tema3_ej5.genruntimeconfig.cache
